@@ -1,0 +1,7 @@
+streamlit
+tensorfow
+matplotlib
+seaborn
+gdown
+yaml
+scikit-learn

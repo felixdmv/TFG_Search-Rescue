@@ -1,0 +1,8 @@
+{"coleccionesImagenes": [
+        "coleccion1",
+        "coleccion2",
+        "coleccion3"],
+ "dimensiones": [340, 340, 3],
+ "solapamiento": [35, 45],
+ "sliderUmbralPrediccion": [0.0, 1.0, 0.8, 0.01]
+}

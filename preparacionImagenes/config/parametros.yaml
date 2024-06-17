@@ -1,0 +1,24 @@
+dataSet:
+  imageExtensions: ['jpg','jpeg', 'JPG', 'png']   # Extensiones permitidas
+  labelsSubfolder: 'labels'                        # Subcarpeta donde se encuentran los ficheros de etiquetas
+                         
+
+dataSetTransformado:
+  subimagesFolder: 'subimages'                  # Carpeta al mismo nivel del dataset donde se almacenarán las subimagenes
+  clasificaPorPatron: true                      # Si se clasifica por patrones. Si false, se agruparán en un único directorio
+  expresionRegular: '^train_([a-zA-Z]+)_\d+'    # Expresión regular si es posible extraer un patrón del nombre de la imagen
+  posicionPatron: 1                             # Posición del patrón en la expresión regular
+  directorioUnico: 'TODOS'                      # Si no se clasifica por patrones, se agrupa en un único directorio
+
+subimages:
+  size: [340, 340]          # Tamaño de las subimagenes: [filas, columnas]
+  overlap: [170, 170]       # Superposición de las subimagenes: [a lo ancho, a lo alto]
+  margins: [35, 35]         # Margen a partir del cual se crea una subimagen en la derecha o abajo de la imagen original: [a lo ancho, a lo alto]
+
+validacionCruzada:
+  numCajas: 5  # Número de particiones de la validación cruzada
+
+informes:
+  informeBndbox: '../informes/informeBoundingboxes.txt'                     # Fichero de informe de las bndbox
+  informeAnalisisFicheros: '../informes/informeAnalisisFicheros.txt'        # Fichero de informe de análisis de ficheros
+  informeCreacionSubimagenes: '../informes/informeCreacionSubimagenes.txt'  # Fichero de informe de creación de subimágenes

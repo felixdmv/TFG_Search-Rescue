@@ -1,0 +1,4 @@
+tensorfow
+matplotlib
+yaml
+scikit-learn

@@ -1,0 +1,15 @@
+Informe de Medidas de Bounding Boxes
+===============================
+
+Número total de Bounding Boxes: 2892
+
+Medidas:
+- Ancho máximo: 162
+- Alto máximo: 190
+- Ancho mínimo: 19
+- Alto mínimo: 20
+- Ancho medio: 64.2008990318119
+- Alto medio: 64.649377593361
+
+
+Fin del Informe
