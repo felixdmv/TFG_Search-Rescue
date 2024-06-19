@@ -148,6 +148,7 @@ def generaInformeCreacionSubimagenesXML(ficheroInforme, estadisticas, configurac
 
     print(f"Informe generado correctamente en '{ficheroInforme}'")
 
+
 def main():
     configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
     #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
