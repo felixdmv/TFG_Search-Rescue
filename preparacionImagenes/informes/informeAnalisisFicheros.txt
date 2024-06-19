@@ -5,48 +5,48 @@ Archivos de imagen sin XML asociado:
 Se encontraron 37 archivos de imagen sin XML asociado.
 
 train_MED_1006
-train_MED_1026
-train_MED_1008
-train_MED_1023
-train_MED_1021
-train_MED_1033
-train_MED_1015
+train_MED_1017
+train_MED_1018
+train_MED_1029
+train_MED_1019
 train_BRK_2052
-train_MED_1032
+train_MED_1011
+train_MED_1033
+train_MED_1023
+train_MED_1028
+train_MED_1007
+train_MED_1021
+train_MED_1034
+train_MED_1016
+train_MED_1015
+train_MED_1008
+train_MED_1026
+train_MED_1005
+train_MED_1024
+train_MED_1001
+train_MED_1014
+train_MED_1013
 train_MED_1004
-train_MED_1031
 train_MED_1027
 train_MED_1036
-train_MED_1010
-train_MED_1034
-train_MED_1011
-train_MED_1028
-train_MED_1024
-train_MED_1014
-train_MED_1009
-train_MED_1013
-train_MED_1018
-train_MED_1016
-train_MED_1001
-train_MED_1003
-train_MED_1035
+train_MED_1032
 train_MED_1025
-train_MED_1007
-train_MED_1012
-train_MED_1005
-train_MED_1017
-train_MED_1029
+train_MED_1010
 train_MED_1030
-train_MED_1022
-train_MED_1019
-train_MED_1020
 train_MED_1002
+train_MED_1012
+train_MED_1035
+train_MED_1031
+train_MED_1020
+train_MED_1022
+train_MED_1003
+train_MED_1009
 
 
 Archivos XML sin imagen asociada:
 Se encontraron 2 archivos XML sin imagen asociada.
 
-train_BRK_2034
 train_BRK_2033
+train_BRK_2034
 
 Fin del Informe

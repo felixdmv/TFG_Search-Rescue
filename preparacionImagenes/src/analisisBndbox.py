@@ -1,6 +1,8 @@
-from utils.utilidadesDirectorios import seleccionaDirectorio, obtienePathFicheros
+import settings
+from utils.utilidadesDirectorios import obtienePathFicheros
+from utils.dialogoFicheros import seleccionaDirectorio
 from utils.procesadoXML import getListaBndbox
-from utils.entradaSalida import cargaParametrosConfiguracion
+from utils.entradaSalida import cargaParametrosConfiguracionYAML
 
 import sys
 
@@ -58,7 +60,8 @@ def generaInformeBndbox(ficheroInforme, salidaAnalisis):
 
 
 def main():
-    configuracion = cargaParametrosConfiguracion('../config/parametros.yaml')
+    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
+    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
     if configuracion == None:
         return
     

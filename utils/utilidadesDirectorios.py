@@ -1,10 +1,24 @@
 import os
-import tkinter as tk
-from tkinter import filedialog
+
 import glob
 import shutil
 
+def obtieneNombreBase(filePath):
+    return os.path.splitext(os.path.basename(filePath))[0]
+
 def buscaFichero(directorio, nombreFichero, extension):
+    """
+    Busca un fichero con el nombre y la extensión especificados en el directorio y sus subdirectorios.
+
+    Args:
+        directorio (str): El directorio raíz donde se realizará la búsqueda.
+        nombreFichero (str): El nombre del fichero a buscar.
+        extension (str): La extensión del fichero a buscar.
+
+    Returns:
+        str or None: La ruta completa del fichero encontrado, o None si no se encuentra.
+
+    """
     nombreImagenSinExtension = nombreFichero.split('.')[0]
     for root, _, files in os.walk(directorio):
         for file in files:
@@ -12,17 +26,29 @@ def buscaFichero(directorio, nombreFichero, extension):
                 return os.path.join(root, file)
     return None
 
-def buscaFicheroMismoNombre(filePath, extension):
+def buscaFicheroMismoNombreBase(filePath, extension):
+    """
+    Busca un archivo con el mismo nombre base en el directorio y sus subdirectorios.
+
+    Args:
+        filePath (str): La ruta del archivo de referencia.
+        extension (str): La extensión del archivo a buscar.
+
+    Returns:
+        str or None: La ruta del primer archivo encontrado con el mismo nombre base y extensión especificada,
+                     o None si no se encuentra ningún archivo.
+
+    """
     # Obtener el directorio del archivo de imagen
     directorio = os.path.dirname(filePath)
     
     # Obtener el basename del archivo de imagen sin la extensión
-    basename = os.path.splitext(os.path.basename(filePath))[0]
+    basename = obtieneNombreBase(filePath)
     
-    # Crear el patrón de búsqueda para archivos XML con el mismo basename
+    # Crear el patrón de búsqueda para archivos con el mismo basename y extensión
     patronBusqueda = os.path.join(directorio, '**', f'{basename}.' + extension)
     
-    # Buscar archivos XML usando glob
+    # Buscar archivos usando glob
     files = glob.glob(patronBusqueda, recursive=True)
     
     if files:
@@ -30,8 +56,7 @@ def buscaFicheroMismoNombre(filePath, extension):
     else:
         return None  # Retornar None si no se encuentra ningún archivo
     
-def obtieneNombreBase(filePath):
-    return os.path.splitext(os.path.basename(filePath))[0]
+
 
    
 def obtienePathFromBasename(path, basename, extension):
@@ -75,22 +100,3 @@ def obtienePathFicheros(directorio, extensionesPermitidas=None):
             listaPaths.append(os.path.join(directorio, archivo))
     return listaPaths
 
-def seleccionaDirectorio():
-   root = tk.Tk()
-   root.withdraw()
-   root.wm_attributes('-topmost', 1)
-   folderPath = filedialog.askdirectory(master=root)
-   root.destroy()
-   if folderPath == '':
-       return None
-   return folderPath
-
-def seleccionaFichero():
-    root = tk.Tk()
-    root.withdraw()
-    root.wm_attributes('-topmost', 1)
-    filePath = filedialog.askopenfilename(master=root)
-    root.destroy()
-    if filePath == '':
-        return None
-    return filePath

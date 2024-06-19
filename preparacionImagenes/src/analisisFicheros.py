@@ -1,5 +1,7 @@
-from utils.utilidadesDirectorios import seleccionaDirectorio, obtieneNombresBase
-from utils.entradaSalida import cargaParametrosConfiguracion
+import settings
+from utils.utilidadesDirectorios import obtieneNombresBase
+from utils.entradaSalida import cargaParametrosConfiguracionYAML
+from utils.dialogoFicheros import seleccionaDirectorio
 
 
 def generaInformeAnalisisFicheros(ficheroInforme, imagenesSinXML, xmlSinImagen):
@@ -22,7 +24,8 @@ def generaInformeAnalisisFicheros(ficheroInforme, imagenesSinXML, xmlSinImagen):
 
 
 def main():
-    configuracion = cargaParametrosConfiguracion('../config/parametros.yaml')
+    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
+    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
     if configuracion == None:
         return
     

@@ -6,7 +6,7 @@ import gdown
 from PIL import Image
 import yaml
 
-def cargaParametrosConfiguracion(ficheroConfiguracion):
+def cargaParametrosConfiguracionYAML(ficheroConfiguracion):
     try:
         with open(ficheroConfiguracion, 'r') as archivo_config:
             configuracion = yaml.safe_load(archivo_config)

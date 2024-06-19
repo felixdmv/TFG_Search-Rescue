@@ -1,8 +1,10 @@
-from utils.entradaSalida import cargaParametrosConfiguracion, cargaImagen
-from utils.utilidadesDirectorios import seleccionaFichero, buscaFicheroMismoNombre
+# Importa settings.py para configurar los paths
+import settings
+from utils.entradaSalida import cargaParametrosConfiguracionYAML, cargaImagen
+from utils.utilidadesDirectorios import buscaFicheroMismoNombreBase
 from utils.procesadoXML import getListaBndbox
 from utils.graficosImagenes import dibujaRectangulos, creaListaRectangulos
-
+from utils.dialogoFicheros import seleccionaFichero
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,7 +17,8 @@ def dibujaImagen(imagen):
     plt.show()
 
 def main():
-    configuracion = cargaParametrosConfiguracion('../config/parametros.yaml')
+    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
+    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
     if configuracion == None:
         print('No se ha podido cargar el archivo de configuración "../config/parametros.yaml"')
         return
@@ -25,7 +28,7 @@ def main():
         print('No se ha seleccionado ninguna imagen')
         return
     
-    xmlPath = buscaFicheroMismoNombre(imagenPath, 'xml')
+    xmlPath = buscaFicheroMismoNombreBase(imagenPath, 'xml')
     if xmlPath == None:
         print(f'No se ha encontrado ningún archivo XML con el mismo nombre que la imagen seleccionada {imagenPath}.')
         return
