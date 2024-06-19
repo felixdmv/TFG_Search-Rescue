@@ -60,9 +60,9 @@ def generaInformeBndbox(ficheroInforme, salidaAnalisis):
 
 
 def main():
-    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
-    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
+    configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
+        print(f"Error cargando el fichero de configuración {settings.PATH_PARAMETROS}")
         return
     
     labelsPath = seleccionaDirectorio()
@@ -72,7 +72,7 @@ def main():
     xmlPaths = obtienePathFicheros(labelsPath, extensionesPermitidas=['xml'])
     salidaAnalisis = analizaBndbox(xmlPaths)
 
-    ficheroInforme = configuracion['informes']['informeBndbox']
+    ficheroInforme = settings.PATH_INFORMEBND
     generaInformeBndbox(ficheroInforme, salidaAnalisis)
 
 if __name__ == '__main__':

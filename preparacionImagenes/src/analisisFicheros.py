@@ -24,9 +24,9 @@ def generaInformeAnalisisFicheros(ficheroInforme, imagenesSinXML, xmlSinImagen):
 
 
 def main():
-    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
-    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
+    configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
+        print(f"Error cargando el fichero de configuración {settings.PATH_PARAMETROS}")
         return
     
     datasetPath = seleccionaDirectorio()
@@ -47,8 +47,7 @@ def main():
     # Encontrar archivos XML sin imagen asociada
     xmlSinImagen = xmlBasenames - imagesBasenames
 
-    ficheroInforme = configuracion['informes']['informeAnalisisFicheros']
-
+    ficheroInforme = settings.PATH_INFORMEANALISISFICHEROS
     generaInformeAnalisisFicheros(ficheroInforme, imagenesSinXML, xmlSinImagen)
 
     

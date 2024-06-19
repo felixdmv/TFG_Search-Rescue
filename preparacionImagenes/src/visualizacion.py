@@ -17,10 +17,9 @@ def dibujaImagen(imagen):
     plt.show()
 
 def main():
-    configuracion = cargaParametrosConfiguracionYAML('preparacionImagenes/config/parametros.yaml') # Ejecución desde el directorio raíz
-    #configuracion = cargaParametrosConfiguracionYAML('../config/parametros.yaml') # Ejecución al mismo nivel que el script
+    configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
-        print('No se ha podido cargar el archivo de configuración "../config/parametros.yaml"')
+        print(f"Error cargando el fichero de configuración {settings.PATH_PARAMETROS}")
         return
     
     imagenPath = seleccionaFichero()

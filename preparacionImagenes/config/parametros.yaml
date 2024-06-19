@@ -17,14 +17,3 @@ subimages:
 
 validacionCruzada:
   numCajas: 5  # Número de particiones de la validación cruzada
-
-informes:
-  #informeBndbox: '../informes/informeBoundingboxes.txt'                     # Fichero de informe de las bndbox
-  informeBndbox: 'preparacionImagenes/informes/informeBoundingboxes.txt'                     # Fichero de informe de las bndbox
-  
-  #informeAnalisisFicheros: '../informes/informeAnalisisFicheros.txt'        # Fichero de informe de análisis de ficheros
-  informeAnalisisFicheros: 'preparacionImagenes/informes/informeAnalisisFicheros.txt'        # Fichero de informe de análisis de ficheros
-  
-  #informeCreacionSubimagenes: '../informes/informeCreacionSubimagenes.txt'  # Fichero de informe de creación de subimágenes
-  informeCreacionSubimagenes: 'preparacionImagenes/informes/informeCreacionSubimagenes.txt'  # Fichero de informe de creación de subimágenes
-

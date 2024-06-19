@@ -3,7 +3,7 @@ Informe de Creación de Subimágenes y XML
 
 Tamaño de subimágenes: [340, 340]
 Overlap: [170, 170]
-Márgenes: [35, 35] 
+Márgenes: [35, 35]
 
 =========================================
 
