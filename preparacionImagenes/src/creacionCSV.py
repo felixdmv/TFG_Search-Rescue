@@ -2,12 +2,13 @@ import settings
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 import utils.utilidadesDirectorios as ud
 from utils.procesadoXML import getListaBndbox
+from utils.dialogoFicheros import seleccionaDirectorio
 import csv
 from sklearn.model_selection import StratifiedKFold
 
 
 # Función para crear el CSV
-def createCsv(subimageTypePath, numCajas):
+def createTypeCsv(subimageTypePath, numCajas):
     nomFolder = ud.obtieneNombreBase(subimageTypePath)
     nomFich = '_' +  nomFolder + '.csv' 
     csvFilepath = ud.creaPathDirectorioNivelInferior(subimageTypePath, nomFich)  
@@ -46,6 +47,19 @@ def createCsv(subimageTypePath, numCajas):
                 writer.writerow([nomFolder, imageNames[idx], labels[idx], i+1])
 
 
+# Función para combinar todos los CSVs en uno solo
+def createAllCsv(csvFilepaths, outputFilepath):
+    with open(outputFilepath, 'w', newline='') as outfile:
+        writer = csv.writer(outfile)
+        writer.writerow(["Dataset", "Nombre del archivo", "Hay humano", "Caja Hay humano"])
+
+        for filepath in csvFilepaths:
+            with open(filepath, 'r') as infile:
+                reader = csv.reader(infile)
+                next(reader)  # Omitir la cabecera de cada archivo CSV individual
+                for row in reader:
+                    writer.writerow(row)
+
 def main():
     configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
@@ -54,14 +68,19 @@ def main():
 
     print("Creación de CSVs")
     numCajas = configuracion['validacionCruzada']['numCajas']
-    subimagesPath = ud.seleccionaDirectorio()  # Provisional para pruebas
+    subimagesPath = seleccionaDirectorio()
     listasubimageTypePaths = ud.obtienePathFicheros(subimagesPath)
     
     for subimageTypePath in listasubimageTypePaths:
         try:
-            createCsv(subimageTypePath, numCajas)
+            createTypeCsv(subimageTypePath, numCajas)
         except Exception as e:
             print(f"Error creando CSV's en {subimageTypePath}: {str(e)}")
+    
+    # Crear el CSV conjunto
+    outputFilepath = ud.creaPathDirectorioNivelInferior(subimagesPath, "_Todos.csv")
+    createAllCsv(csvFilepaths, outputFilepath)
+    print(f"CSV conjunto creado en: {outputFilepath}")
 
 if __name__ == '__main__':
     main()

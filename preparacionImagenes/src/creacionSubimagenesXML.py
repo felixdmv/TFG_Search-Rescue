@@ -4,6 +4,7 @@ import utils.utilidadesDirectorios as ud
 from utils.procesadoXML import getListaBndbox, createXmlSubimage
 from utils.expresionesRegulares import getPatronFile
 from utils.graficosImagenes import creaListaRectangulosConIndices
+from utils.dialogoFicheros import seleccionaDirectorio
 from PIL import Image
 
 def bndboxDentro(r1, r2):
@@ -154,7 +155,7 @@ def main():
         return
     
     print("Selección del directorio con las imágenes del dataset")
-    datasetPath = ud.seleccionaDirectorio()
+    datasetPath = seleccionaDirectorio()
     if datasetPath == None:
         print("No se seleccionó un directorio de imágenes")
         return
