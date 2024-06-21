@@ -1,4 +1,5 @@
 import settings
+import os
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 import utils.utilidadesDirectorios as ud
 from utils.procesadoXML import getListaBndbox
@@ -48,7 +49,13 @@ def createTypeCsv(subimageTypePath, numCajas):
 
 
 # Función para combinar todos los CSVs en uno solo
-def createAllCsv(csvFilepaths, outputFilepath):
+def createAllCsvFromDirectory(directory, outputFilepath):
+    csvFilepaths = []
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.csv'):
+                csvFilepaths.append(os.path.join(root, file))
+
     with open(outputFilepath, 'w', newline='') as outfile:
         writer = csv.writer(outfile)
         writer.writerow(["Dataset", "Nombre del archivo", "Hay humano", "Caja Hay humano"])
@@ -56,7 +63,7 @@ def createAllCsv(csvFilepaths, outputFilepath):
         for filepath in csvFilepaths:
             with open(filepath, 'r') as infile:
                 reader = csv.reader(infile)
-                next(reader)  # Omitir la cabecera de cada archivo CSV individual
+                next(reader)
                 for row in reader:
                     writer.writerow(row)
 
@@ -70,16 +77,16 @@ def main():
     numCajas = configuracion['validacionCruzada']['numCajas']
     subimagesPath = seleccionaDirectorio()
     listasubimageTypePaths = ud.obtienePathFicheros(subimagesPath)
-    
+    '''
     for subimageTypePath in listasubimageTypePaths:
         try:
             createTypeCsv(subimageTypePath, numCajas)
         except Exception as e:
             print(f"Error creando CSV's en {subimageTypePath}: {str(e)}")
-    
+    '''
     # Crear el CSV conjunto
     outputFilepath = ud.creaPathDirectorioNivelInferior(subimagesPath, "_Todos.csv")
-    createAllCsv(csvFilepaths, outputFilepath)
+    createAllCsvFromDirectory(subimagesPath, outputFilepath)
     print(f"CSV conjunto creado en: {outputFilepath}")
 
 if __name__ == '__main__':

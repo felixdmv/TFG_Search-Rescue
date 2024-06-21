@@ -1,0 +1,10 @@
+coleccionesImagenes: ['coleccion1','coleccion2', 'coleccion3']   # Colecciones de imágenes en directorio de imágenes
+
+imagenes:
+  imageExtensions: ['jpg','jpeg', 'JPG', 'png']   # Extensiones permitidas
+  size: [340, 340]          # Tamaño de las imagenes de aprendizaje: [filas, columnas]
+  overlap: [170, 170]       # Superposición de las subimagenes: [a lo ancho, a lo alto]
+  margins: [35, 35]         # Margen a partir del cual se crea una subimagen en la derecha o abajo de la imagen original: [a lo ancho, a lo alto]
+
+
+sliderUmbralPrediccion: [0.0, 1.0, 0.8, 0.01]
