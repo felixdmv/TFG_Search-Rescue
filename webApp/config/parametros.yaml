@@ -1,5 +1,3 @@
-coleccionesImagenes: ['coleccion1','coleccion2', 'coleccion3']   # Colecciones de imágenes en directorio de imágenes
-
 imagenes:
   imageExtensions: ['jpg','jpeg', 'JPG', 'png']   # Extensiones permitidas
   size: [340, 340]          # Tamaño de las imagenes de aprendizaje: [filas, columnas]

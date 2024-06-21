@@ -8,7 +8,7 @@ import yaml
 
 def cargaParametrosConfiguracionYAML(ficheroConfiguracion):
     try:
-        with open(ficheroConfiguracion, 'r') as archivo_config:
+        with open(ficheroConfiguracion, 'r', encoding='utf-8') as archivo_config:
             configuracion = yaml.safe_load(archivo_config)
     except FileNotFoundError as error:
         print(f"Error: {error}")

@@ -1,52 +1,10 @@
 import utils.entradaSalida as es
-import prediccion as pred
 import streamlit as st
 
-#######################################################################################################################
-def ocultaNombreFichero():
-    """
-    Hides the file name in the file uploader component.
-
-    This function adds custom CSS to hide the file name in the file uploader component.
-    It sets the display property to 'none' and visibility property to 'hidden' for the file name element.
-
-    Parameters:
-        None
-
-    Returns:
-        None
-    """
-    css = """
-            .stFileUploaderFile {
-                display: none;
-                visibility: hidden;
-            }
-            """
-    st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
-#######################################################################################################################
 
 #######################################################################################################################
-def flipMuestraEtiquetas():
-    st.session_state['muestraEtiquetas'] = not st.session_state['muestraEtiquetas']
-
-def selectFolder():
-    st.session_state['directorio'] = es.seleccionaDirectorio()
-
-def muestraEtiquetas():
-    col1, col2 = st.columns(2)
-        
-    with col1:
-        if st.session_state['directorio'] is None:
-            st.checkbox("Muestra imagen con etiquetas", help='Debes seleccionar previamente un directorio de imágenes', value=False, disabled=True)
-            st.session_state['muestraEtiquetas'] = False
-        else:
-            st.checkbox("Muestra imagen con etiquetas", help=f"Se buscarán los archivos de etiquetas desde {st.session_state['directorio']}", value=False, on_change=flipMuestraEtiquetas)
-    with col2:
-        st.button("Selecciona directorio de etiquetas", on_click=selectFolder)
-        if st.session_state['directorio'] is not None:
-            st.write("Directorio:", st.session_state['directorio'])
-        else:
-            st.write("Directorio no seleccionado")
+def selectboxSeleccionModelo(nombresModelos):
+    return st.selectbox(label='Selecciona un modelo', key='selectboxModelo', index=None, options=nombresModelos)
 #######################################################################################################################
 
 #######################################################################################################################
@@ -77,43 +35,6 @@ def sliderMargenes(solapamiento, margenes):
     return margen_x, margen_y
 #######################################################################################################################
 
-#######################################################################################################################
-def cargaColeccion():
-    pass # Sin implementar
-
-def selectboxColeccionImagenes(listaColecciones):
-    with st.expander("Descarga de colección de imágenes", expanded=False):
-        st.selectbox(label='Elige una colección', key='ficheroImagenes', index=None, options=listaColecciones, on_change=cargaColeccion)
-#######################################################################################################################
-
-#######################################################################################################################
-@st.cache_data(ttl=3600)
-def cargaModeloH5(nombreModelo, urlModelo):
-    """
-    Carga un modelo a partir de un nombre h5 y su url y devuelve el modelo cargado.
-
-    Args:
-        nombreModelo (str): El nombre del modelo.
-        urlModelo (str): La URL del archivo del modelo.
-
-    Returns:
-        El modelo h5 cargado.
-
-    """
-    ficheroModelo = nombreModelo.strip('.') + '.h5'  # Elimina los puntos del nombre del modelo y añade la extensión .h5
-    es.cargaArchivoDrive(urlModelo, ficheroModelo)
-    return pred.cargaModelo(ficheroModelo)
-
-
-def selectboxSeleccionModelo(enlacesModelos):
-    nombreModelo = st.selectbox(label='Selecciona un modelo', key='selectboxModelo', index=None, options=enlacesModelos.keys())
-    if nombreModelo is not None:
-        if nombreModelo != st.session_state['nombreModelo']: # Se seleccionó un nuevo modelo
-            st.session_state['nombreModelo'] = nombreModelo
-            st.session_state['nuevoModelo'] = True
-            urlModelo = enlacesModelos[nombreModelo]
-            st.session_state['modelo'] = cargaModeloH5(nombreModelo, urlModelo)
-#######################################################################################################################
 
 #######################################################################################################################
 def seleccionAjustes(parametros):
@@ -122,9 +43,64 @@ def seleccionAjustes(parametros):
             # *parametros['sliderUmbralPrediccion'] unpacks the tuple into individual arguments
             umbral = st.slider('Umbral de predicción', *parametros['sliderUmbralPrediccion'])
         with st.container(border=True):
-            solape_x, solape_y = sliderSolapamientos(parametros['imagenes']['size'], parametros['imagenes']['overlap'])
-            margen_x, margen_y = sliderMargenes(parametros['imagenes']['overlap'], parametros['imagenes']['margins'])
-        with st.container(border=True):
-            muestraEtiquetas()
-    return umbral, solape_x, solape_y, margen_x, margen_y
+            solapamiento = sliderSolapamientos(parametros['imagenes']['size'], parametros['imagenes']['overlap'])
+            margenes = sliderMargenes(parametros['imagenes']['overlap'], parametros['imagenes']['margins'])
+    return umbral, solapamiento, margenes
+#######################################################################################################################
+
+
+
+
+
+
+#######################################################################################################################
+# def flipMuestraEtiquetas():
+#     st.session_state['muestraEtiquetas'] = not st.session_state['muestraEtiquetas']
+
+# def selectFolder():
+#     st.session_state['directorio'] = es.seleccionaDirectorio()
+
+# def muestraEtiquetas():
+#     col1, col2 = st.columns(2)
+        
+#     with col1:
+#         if st.session_state['directorio'] is None:
+#             st.checkbox("Muestra imagen con etiquetas", help='Debes seleccionar previamente un directorio de imágenes', value=False, disabled=True)
+#             st.session_state['muestraEtiquetas'] = False
+#         else:
+#             st.checkbox("Muestra imagen con etiquetas", help=f"Se buscarán los archivos de etiquetas desde {st.session_state['directorio']}", value=False, on_change=flipMuestraEtiquetas)
+#     with col2:
+#         st.button("Selecciona directorio de etiquetas", on_click=selectFolder)
+#         if st.session_state['directorio'] is not None:
+#             st.write("Directorio:", st.session_state['directorio'])
+#         else:
+#             st.write("Directorio no seleccionado")
+#######################################################################################################################
+
+
+
+#######################################################################################################################
+def cargaColeccion(nombresColeccionesYPath):
+    pathColeccion = nombresColeccionesYPath[st.session_state['selectBoxColeccionImagenes']]
+    st.session_state['hayImagenes'] = True
+    st.session_state['listaImagenes'] = [str(f) for f in pathColeccion.iterdir() if f.suffix == '.JPG']
+
+
+def selectboxColeccionImagenes(nombresColeccionesYPath):
+    listaNombres = list(nombresColeccionesYPath.keys())
+    return st.selectbox(label='Elige una colección', key='selectBoxColeccionImagenes', index=None, options=listaNombres)
+        
+#######################################################################################################################
+
+
+#######################################################################################################################
+def creaTablaImagenes(listaImagenes, n):
+    grupos = []
+    for i in range(0, len(listaImagenes), n):
+        grupos.append(listaImagenes[i:i+n])
+
+    for grupo in grupos:
+        cols = st.columns(n)
+        for i, imagen in enumerate(grupo):
+            cols[i].image(imagen)
 #######################################################################################################################

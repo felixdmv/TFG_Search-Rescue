@@ -89,38 +89,6 @@ def creaListaRectangulos(imageSize, subimageSize, overlap, margins):
     
     return listaRectangulos
 
-def creaRectangulos(tamImOriginal, tamSubimagen, solapamiento):
-    """
-    Creates a list of rectangles that divide an image into subimages.
-
-    Args:
-        tamImOriginal (tuple): The size of the original image (width, height).
-        tamSubimagen (tuple): The size of the subimage (subimage_size_x, subimage_size_y).
-        solapamiento (tuple): The amount of overlap between subimages (overlap_x, overlap_y).
-
-    Returns:
-        tuple: A tuple containing the list of rectangles, the number of rows, and the number of columns.
-    """
-    width, height = tamImOriginal
-    subimage_size_x, subimage_size_y = tamSubimagen
-    overlap_x, overlap_y = solapamiento
-
-    listaRectangulos = []
-    numImagenes = 0
-    col = 0
-    for left in range(0, width, subimage_size_x - overlap_x):
-        right = left + subimage_size_x
-        if right <= width:
-            col += 1
-            for upper in range(0, height, subimage_size_y - overlap_y):
-                lower = upper + subimage_size_y
-                if lower <= height:
-                    listaRectangulos.append((left, upper, right, lower))
-                    numImagenes += 1
-    return listaRectangulos, numImagenes//col, col
-
-
-
 
 def dibujaRejilla(image, listaRectangulos, ancho=2, color='black'):
     """
