@@ -59,7 +59,7 @@ def cargaModeloH5(nombreModelo, urlModelo):
         El modelo h5 cargado.
 
     """
-    ficheroModelo = nombreModelo.strip('.') + '.h5'  # Elimina los puntos del nombre del modelo y añade la extensión .h5
+    ficheroModelo = nombreModelo.strip('.') + '.h5'  # Elimina los puntos del nombre del modelo y añade la extensión .h5 
     es.cargaArchivoDrive(urlModelo, ficheroModelo)
     return pred.cargaModelo(ficheroModelo)
 
