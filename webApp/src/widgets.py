@@ -1,10 +1,16 @@
 import utils.entradaSalida as es
 import streamlit as st
+import utils.utilidadesDirectorios as ud
+
 
 
 #######################################################################################################################
 def selectboxSeleccionModelo(nombresModelos):
-    return st.selectbox(label='Selecciona un modelo', key='selectboxModelo', index=None, options=nombresModelos)
+    if st.session_state['nombreModelo'] is None:
+        indice = None
+    else:
+        indice = nombresModelos.index(st.session_state['nombreModelo'])
+    return st.selectbox(label='Selecciona un modelo', key='selectboxModelo', index=indice, options=nombresModelos)
 #######################################################################################################################
 
 #######################################################################################################################
@@ -37,63 +43,6 @@ def sliderMargenes(solapamiento, margenes):
 
 
 #######################################################################################################################
-def seleccionAjustes(parametros):
-    with st.expander("Selección de ajustes", expanded=True):
-        with st.container(border=True):
-            # *parametros['sliderUmbralPrediccion'] unpacks the tuple into individual arguments
-            umbral = st.slider('Umbral de predicción', *parametros['sliderUmbralPrediccion'])
-        with st.container(border=True):
-            solapamiento = sliderSolapamientos(parametros['imagenes']['size'], parametros['imagenes']['overlap'])
-            margenes = sliderMargenes(parametros['imagenes']['overlap'], parametros['imagenes']['margins'])
-    return umbral, solapamiento, margenes
-#######################################################################################################################
-
-
-
-
-
-
-#######################################################################################################################
-# def flipMuestraEtiquetas():
-#     st.session_state['muestraEtiquetas'] = not st.session_state['muestraEtiquetas']
-
-# def selectFolder():
-#     st.session_state['directorio'] = es.seleccionaDirectorio()
-
-# def muestraEtiquetas():
-#     col1, col2 = st.columns(2)
-        
-#     with col1:
-#         if st.session_state['directorio'] is None:
-#             st.checkbox("Muestra imagen con etiquetas", help='Debes seleccionar previamente un directorio de imágenes', value=False, disabled=True)
-#             st.session_state['muestraEtiquetas'] = False
-#         else:
-#             st.checkbox("Muestra imagen con etiquetas", help=f"Se buscarán los archivos de etiquetas desde {st.session_state['directorio']}", value=False, on_change=flipMuestraEtiquetas)
-#     with col2:
-#         st.button("Selecciona directorio de etiquetas", on_click=selectFolder)
-#         if st.session_state['directorio'] is not None:
-#             st.write("Directorio:", st.session_state['directorio'])
-#         else:
-#             st.write("Directorio no seleccionado")
-#######################################################################################################################
-
-
-
-#######################################################################################################################
-def cargaColeccion(nombresColeccionesYPath):
-    pathColeccion = nombresColeccionesYPath[st.session_state['selectBoxColeccionImagenes']]
-    st.session_state['hayImagenes'] = True
-    st.session_state['listaImagenes'] = [str(f) for f in pathColeccion.iterdir() if f.suffix == '.JPG']
-
-
-def selectboxColeccionImagenes(nombresColeccionesYPath):
-    listaNombres = list(nombresColeccionesYPath.keys())
-    return st.selectbox(label='Elige una colección', key='selectBoxColeccionImagenes', index=None, options=listaNombres)
-        
-#######################################################################################################################
-
-
-#######################################################################################################################
 def creaTablaImagenes(listaImagenes, n):
     grupos = []
     for i in range(0, len(listaImagenes), n):
@@ -103,4 +52,78 @@ def creaTablaImagenes(listaImagenes, n):
         cols = st.columns(n)
         for i, imagen in enumerate(grupo):
             cols[i].image(imagen)
+#######################################################################################################################
+
+
+
+#######################################################################################################################
+def cargaImagenesYNombres(pathsImagenes, local=True):
+    st.session_state['listaImagenes'] = [es.cargaImagen(pathImagen) for pathImagen in pathsImagenes]
+    if local:
+        st.session_state['nombresImagenes'] = [pathImagen.name for pathImagen in pathsImagenes]
+    else:
+        st.session_state['nombresImagenes'] = [ud.obtieneNombreBase(pathImagen) for pathImagen in pathsImagenes]
+    
+    
+def actualizaClaveFileUploader():
+    '''
+    Actualiza el valor de la clave del file_uploader para forzar un nuevo file_uploader.
+    El problema s debe a que file_uploader retiene la lista de archivos seleccionados y no la actualiza
+    sino que lo acumula.
+    '''
+    st.session_state['keyUploader'] += 1
+    
+def cargaImagenesLocal():
+    pathImagenes= st.file_uploader("Selecciona imágenes",
+                                            accept_multiple_files=True,
+                                            type=['jpg', 'jpeg', 'png'],
+                                            key=f"fileuploader_{st.session_state['keyUploader']}")
+    if len(pathImagenes):
+        cargaImagenesYNombres(pathImagenes)
+        st.session_state.listaImagenesLocal = True
+        st.session_state.imagenes = None  # Para que no haya dudas del origen de las imagenes
+        actualizaClaveFileUploader()
+        st.session_state.nombreColeccion = None  # Para que no haya dudas del origen de las imagenes
+        st.session_state.selectBoxColeccionImagenes = None  # Para que se muestre el selectbox con la nueva colección
+        st.rerun()  # Para forzar a mostrar un nuevo file_uploader
+                
+def cargaImagenesServidor():
+    nombresColecciones = sorted(list(st.session_state.nombresColeccionesYPath.keys()))
+    if st.session_state.nombreColeccion is None:
+        st.session_state.indiceColeccion = None
+    
+    nombreColeccion = st.selectbox(label='Elige una colección',
+                                                    key='selectBoxColeccionImagenes',
+                                                    index=st.session_state.indiceColeccion,
+                                                    options=nombresColecciones)
+    
+    if nombreColeccion is not None and nombreColeccion != st.session_state.nombreColeccion:
+        st.session_state.nombreColeccion = nombreColeccion
+        pathColeccion = st.session_state.nombresColeccionesYPath[st.session_state.nombreColeccion]
+        pathImagenes = [str(f) for f in pathColeccion.iterdir() if f.suffix == '.JPG']
+        cargaImagenesYNombres(pathImagenes, local=False)
+        st.session_state.listaImagenesLocal = False
+
+    if st.session_state.listaImagenesLocal == False and nombreColeccion is None:
+        st.session_state.listaImagenes = []
+        st.session_state.nombresImagenes = []
+        st.session_state.nombreColeccion = None
+#######################################################################################################################
+
+#######################################################################################################################
+def formularioParametros():
+    with st.expander("Selección de ajustes"):
+        with st.form("Selección de ajustes", border=False):
+            with st.container(border=True):
+                # *st.session_state.sliderUmbralPrediccion unpacks the tuple into individual arguments
+                umbral = st.slider('Umbral de predicción', *st.session_state.sliderUmbralPrediccion)
+            with st.container(border=True):
+                solapamiento = sliderSolapamientos(st.session_state.sizeSubimagenes, st.session_state.overlap)
+                margenes = sliderMargenes(st.session_state.overlap, st.session_state.margins)
+
+            if st.form_submit_button("Actualizar parámetros"):
+                st.session_state.sliderUmbralPrediccion[2] = umbral
+                st.session_state.overlap = solapamiento
+                st.session_state.margins = margenes
+                st.write(st.session_state.overlap)
 #######################################################################################################################

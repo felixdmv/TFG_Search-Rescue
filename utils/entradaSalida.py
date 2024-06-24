@@ -1,5 +1,3 @@
-
-import os
 import json
 import xml.etree.ElementTree as ET
 import gdown
@@ -26,9 +24,7 @@ def cargaArchivoDrive(url, output):
     Returns:
         None
     """
-    print(url, output)
     gdown.download(url, output, quiet=False)
-    
 
 def cargaParametrosProcesamiento(ficheroParametros):
     with open(ficheroParametros, 'r') as archivo:

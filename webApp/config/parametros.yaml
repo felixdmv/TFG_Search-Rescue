@@ -6,3 +6,7 @@ imagenes:
 
 
 sliderUmbralPrediccion: [0.0, 1.0, 0.8, 0.01]
+numberInputNumColumnas: [1, 5, 3]
+numColumnasTablaDurantePrediccion: 8 
+anchoLineaRectangulos: 6
+colorRectangulos: 'red'
