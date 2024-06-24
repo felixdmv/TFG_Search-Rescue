@@ -59,36 +59,6 @@ def creaListaRectangulosConIndices(imageSize, subimageSize, overlap, margins):
     
     return listaRectangulosConIndices
 
-def creaListaRectangulos(imageSize, subimageSize, overlap, margins):
-    width, height = imageSize
-    subimageSize_x, subimageSize_y = subimageSize
-    overlap_x, overlap_y = overlap
-    margin_x, margin_y = margins
-
-    listaRectangulos = []
-    for left in range(0, width, subimageSize_x - overlap_x):
-        right = left + subimageSize_x
-        if right <= width:
-            for upper in range(0, height, subimageSize_y  - overlap_y):
-                lower = upper + subimageSize_y 
-                if lower <= height:
-                    listaRectangulos.append((left, upper, right, lower))
-            if height - upper >= margin_y:
-                listaRectangulos.append((left, height- subimageSize_y, right, height))
-                
-   
-    if width - left >= margin_x:
-        for upper in range(0, height, subimageSize_y  - overlap_y):
-            lower = upper + subimageSize_y 
-            if lower <= height:
-                listaRectangulos.append((width - subimageSize_x, upper, width, lower))
-                
-        if height - upper >= margin_y:
-            listaRectangulos.append((width - subimageSize_x, height- subimageSize_y, width, height))
-           
-    
-    return listaRectangulos
-
 
 def dibujaRejilla(image, listaRectangulos, ancho=2, color='black'):
     """

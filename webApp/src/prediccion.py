@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 # Evita la aparición del mensaje "OMP: Error #15: Initializing libiomp5.dylib, but found libiomp5.dylib already initialized."
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
@@ -8,6 +9,7 @@ from keras.src.saving.saving_api import load_model  # load_model en la bibliogra
 
 
 def cargaModelo(ficheroModelo):
+    st.write(ficheroModelo)
     return load_model(ficheroModelo, compile=False)
 
 def cargaImagen1(ficheroImagen):

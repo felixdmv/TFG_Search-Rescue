@@ -26,7 +26,9 @@ def cargaArchivoDrive(url, output):
     Returns:
         None
     """
+    print(url, output)
     gdown.download(url, output, quiet=False)
+    
 
 def cargaParametrosProcesamiento(ficheroParametros):
     with open(ficheroParametros, 'r') as archivo:
