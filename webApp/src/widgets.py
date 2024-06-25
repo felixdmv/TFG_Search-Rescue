@@ -68,7 +68,7 @@ def cargaImagenesYNombres(pathsImagenes, local=True):
 def actualizaClaveFileUploader():
     '''
     Actualiza el valor de la clave del file_uploader para forzar un nuevo file_uploader.
-    El problema s debe a que file_uploader retiene la lista de archivos seleccionados y no la actualiza
+    El problema se debe a que file_uploader retiene la lista de archivos seleccionados y no la actualiza
     sino que lo acumula.
     '''
     st.session_state['keyUploader'] += 1

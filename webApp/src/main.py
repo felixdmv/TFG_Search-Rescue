@@ -22,6 +22,7 @@ class AppStateMachine:
         self.machine.add_transition('predicciones_imagenesProcesadas', 'predicciones', 'imagenesProcesadas')
         self.machine.add_transition('imagenesProcesadas_hayImagenes', 'imagenesProcesadas', 'hayImagenes')
 
+
 def inicializaEstadosYFSM():
     st.session_state['fsm'] = AppStateMachine()
     parametros = cargaParametrosConfiguracion(settings.PATH_PARAMETROS)
@@ -271,7 +272,7 @@ def imagenesProcesadas():
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Volver a página principal"):
-                st.session_state.fsm.imagenesProcesdas_hayImagenes()
+                st.session_state.fsm.imagenesProcesadas_hayImagenes()
                 st.rerun()
         with col2:
             st.download_button("Descargar csv", st.session_state['resultados'], mime="text/csv")
