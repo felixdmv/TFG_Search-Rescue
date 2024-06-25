@@ -125,5 +125,4 @@ def formularioParametros():
                 st.session_state.sliderUmbralPrediccion[2] = umbral
                 st.session_state.overlap = solapamiento
                 st.session_state.margins = margenes
-                st.write(st.session_state.overlap)
 #######################################################################################################################
