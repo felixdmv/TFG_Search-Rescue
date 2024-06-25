@@ -21,6 +21,7 @@ class AppStateMachine:
         self.machine.add_transition('hayImagenes_predicciones', 'hayImagenes', 'predicciones')
         self.machine.add_transition('predicciones_imagenesProcesadas', 'predicciones', 'imagenesProcesadas')
         self.machine.add_transition('imagenesProcesadas_hayImagenes', 'imagenesProcesadas', 'hayImagenes')
+        self.machine.add_transition('hayImagenes_hayModelo', 'hayImagenes', 'hayModelo')
 
 
 def inicializaEstadosYFSM():
@@ -205,20 +206,25 @@ def seleccionImagenes():
         if st.session_state.fsm.state == 'hayModelo':
             st.session_state.fsm.hayModelo_hayImagenes()
             st.rerun()
+    else:
+        if st.session_state.fsm.state == 'hayImagenes':
+            st.session_state.fsm.hayImagenes_hayModelo()
+            st.rerun()
+    
 
 def muestraImagenes():
-    if len(st.session_state.listaImagenes):
-        if st.session_state.nombreColeccion is None:
-            textoBoton = f"Procesar imágenes seleccionadas localmente "
-        else:
-            textoBoton = f"Procesar imágenes de la colección {st.session_state.nombreColeccion}"
-        if st.button(textoBoton):
-            st.session_state.fsm.hayImagenes_predicciones()
-            st.rerun()
-        st.session_state.numberInputNumColumnas[2] = st.number_input("Selecciona número de columnas de visualización",
+    if st.session_state.nombreColeccion is None:
+        textoBoton = f"Procesar imágenes seleccionadas localmente "
+    else:
+        textoBoton = f"Procesar imágenes de la colección {st.session_state.nombreColeccion}"
+    if st.button(textoBoton):
+        st.session_state.fsm.hayImagenes_predicciones()
+        st.rerun()
+    st.session_state.numberInputNumColumnas[2] = st.number_input("Selecciona número de columnas de visualización",
                                                                     *st.session_state.numberInputNumColumnas)
-        with st.spinner('Creando tabla de imágenes...'):
-            wd.creaTablaImagenes(st.session_state['listaImagenes'], st.session_state.numberInputNumColumnas[2])  
+    with st.spinner('Creando tabla de imágenes...'):
+        wd.creaTablaImagenes(st.session_state['listaImagenes'], st.session_state.numberInputNumColumnas[2])  
+    
 
 def procesandoImagenes():
     if st.session_state.nombreColeccion is None:
