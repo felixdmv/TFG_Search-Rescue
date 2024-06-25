@@ -181,6 +181,7 @@ def seleccionModelo():
             st.session_state.fsm.cargaModelo()
         st.rerun()
 
+
 def cargandoModelo():
     with st.spinner(f'Cargando modelo {st.session_state.nombreModelo}...'):
         urlModelo = st.session_state.enlacesModelos[st.session_state.nombreModelo]
