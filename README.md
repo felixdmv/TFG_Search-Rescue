@@ -1,4 +1,4 @@
-# Proyecto de Búsqueda y Rescate - Versión 1.0
+# Search & Rescue - TFG
 
 <div align="center">
     <img src="img/logoProyecto.png" alt="Logo del Proyecto" width="200"/>
