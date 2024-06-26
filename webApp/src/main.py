@@ -97,7 +97,7 @@ def cargaModeloH5(nombreModelo, urlModelo):
         El modelo h5 cargado.
 
     """
-    ficheroModelo = nombreModelo
+    ficheroModelo = nombreModelo # + '.h5'
     es.cargaArchivoDrive(urlModelo, ficheroModelo) # Cargalocalmente el modelo desde Drive
     return pred.cargaModelo(ficheroModelo)
 
