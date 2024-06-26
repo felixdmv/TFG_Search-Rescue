@@ -94,4 +94,4 @@ Las imágenes pueden contener o no humanos, los cuales están etiquetados en los
 Las imágenes se dividen en distintos tipos de terreno, haciendo del dataset un conjunto heterogéneo.
 
 Debido a su tamaño, el conjunto de datos se encuentra alojado en un archivo comprimido en formato zip en un servidor externo. Por favor, sigue el enlace a continuación para descargar el dataset:
-- [Descargar dataset 'Heridal']((http://ipsar.fesb.unist.hr/HERIDAL%20database.html))
+- [Descargar dataset 'Heridal'] (([http://ipsar.fesb.unist.hr/HERIDAL%20database.html]))
