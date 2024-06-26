@@ -8,23 +8,23 @@
 
 Este repositorio contiene el código desarrollado para un proyecto de búsqueda y rescate, organizado en tres subproyectos: preparación de imágenes, entrenamiento de redes neuronales convolucionales (CNNs) y una aplicación web (WebApp). Cada subproyecto está cuidadosamente estructurado para facilitar su comprensión y reproducibilidad.
 
-## Licencia
 
-Este proyecto está licenciado bajo la [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
+## Tecnologías Utilizadas
+
+[![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![TensorFlow](https://img.shields.io/badge/tensorflow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
+[![Streamlit](https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![YAML](https://img.shields.io/badge/yaml-000000?style=for-the-badge&logo=yaml&logoColor=white)](https://yaml.org/)
+[![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
 
 ## Estructura de Directorios
 
 La estructura general del proyecto es la siguiente:
 
-<div align="center">
-    <img src="img/estructuraGeneral.png" alt="Estructura general del proyecto" width="800"/>
-</div>
-
 ### Directorio Raíz
 
 En el directorio raíz se encuentran las siguientes carpetas y archivos:
 
-- **README.md**: Contiene información general del proyecto.
 - **\_\_init\_\_.py**: Añade el directorio `utils` al path para permitir la importación de módulos.
 - **.gitignore**: Especifica los archivos que Git debe ignorar.
 
@@ -65,11 +65,6 @@ La WebApp se divide en cuatro carpetas:
 
 La carpeta **utils** contiene scripts `.py` de utilidad para los subproyectos de preparación y WebApp.
 
-## Manual del Programador
-
-### Obtención del Código Fuente
-
-Para obtener el código fuente completo del proyecto (excepto los modelos), se puede descargar desde [GitHub](https://github.com/felixdmv/TFG_Search-Rescue).
 
 ### Entorno de Desarrollo
 
@@ -81,19 +76,16 @@ Se recomienda tener instaladas las siguientes herramientas para reproducir compl
 - **WinSCP**
 - **Putty**
 
-Opcionalmente, para mayor comodidad en el desarrollo de nuevo código o subproyectos asociados, se puede usar:
 
-- **GitHub Desktop**
+## Licencia
 
-## Tecnologías Utilizadas
+Este proyecto está licenciado bajo la [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
 
-[![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![TensorFlow](https://img.shields.io/badge/tensorflow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
-[![Streamlit](https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![YAML](https://img.shields.io/badge/yaml-000000?style=for-the-badge&logo=yaml&logoColor=white)](https://yaml.org/)
-[![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+## Autores
 
-### ¡Gracias por usar este proyecto!
+- **Félix de Miguel Villalba** - *Desarrollador Principal*
+- **Daniel Urda Muñoz** - *Tutor*
+
 
 ## Dataset 'Heridal'
 
@@ -102,8 +94,4 @@ Las imágenes pueden contener o no humanos, los cuales están etiquetados en los
 Las imágenes se dividen en distintos tipos de terreno, haciendo del dataset un conjunto heterogéneo.
 
 Debido a su tamaño, el conjunto de datos se encuentra alojado en un archivo comprimido en formato zip en un servidor externo. Por favor, sigue el enlace a continuación para descargar el dataset:
-- [Descargar dataset 'Heridal'](https://universidaddeburgos-my.sharepoint.com/:u:/g/personal/ahcosio_ubu_es/EScZ0zY0zmlEqdYIgYADsOkBj0LB31ck-oN_fkXlQLAuIg?e=mQw0l3)
-
-
-
-
+- [Descargar dataset 'Heridal']((http://ipsar.fesb.unist.hr/HERIDAL%20database.html))
