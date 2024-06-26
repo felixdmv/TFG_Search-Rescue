@@ -6,7 +6,12 @@
 
 ## Descripción
 
-Este repositorio contiene el código desarrollado para un proyecto de búsqueda y rescate, organizado en tres subproyectos: preparación de imágenes, entrenamiento de redes neuronales convolucionales (CNNs) y una aplicación web (WebApp). Cada subproyecto está cuidadosamente estructurado para facilitar su comprensión y reproducibilidad.
+Este repositorio contiene el código desarrollado para el Trabajo Fin de Grado:  
+  
+"Sistema de visión artificial para detección de personas en entornos naturales a partir de imágenes tomadas desde un dron"  
+  
+Está organizado en tres subproyectos: preparación de imágenes, entrenamiento de redes neuronales convolucionales (CNNs) y una aplicación web (WebApp).  
+Cada subproyecto está cuidadosamente estructurado para facilitar su comprensión y reproducibilidad.
 
 
 ## Tecnologías Utilizadas
