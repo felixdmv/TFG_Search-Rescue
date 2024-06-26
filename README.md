@@ -93,11 +93,7 @@ Este proyecto está licenciado bajo la [Creative Commons Attribution-NonCommerci
 - **Daniel Urda Muñoz** - *Tutor*
 
 
-## Dataset 'Heridal'
+## Dataset
 
-El dataset Heridal contiene más de 1500 imágenes .jpg y sus correspodientes archivos de etiquetas .xml.
-Las imágenes pueden contener o no humanos, los cuales están etiquetados en los .xml mediante coordenadas (x,y)
-Las imágenes se dividen en distintos tipos de terreno, haciendo del dataset un conjunto heterogéneo.
-
-Debido a su tamaño, el conjunto de datos se encuentra alojado en un archivo comprimido en formato zip en un servidor externo. Por favor, sigue el enlace a continuación para descargar el dataset:
-- [Descargar dataset 'Heridal'] (([http://ipsar.fesb.unist.hr/HERIDAL%20database.html]))
+El dataset utilizado para el desarrollo del proyecto es **HERIDAL** y se puede descargar desde la web de los creadores.
+- [Descargar dataset] (([http://ipsar.fesb.unist.hr/HERIDAL%20database.html]))
