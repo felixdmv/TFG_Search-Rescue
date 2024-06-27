@@ -1,0 +1,8 @@
+streamlit
+matplotlib
+seaborn
+gdown
+scikit-learn
+pyyaml
+tensorflow
+transitions
