@@ -1,6 +1,6 @@
 ## Dataset de subimágenes
 
-El dataset de subimágenes contiene las mismas imágenes que el dataset 'Heridal', pero estas están troceadas más pequeñas 340x340 píxeles. 
+El dataset de subimágenes contiene las mismas imágenes que el dataset 'Heridal', pero estas están troceadas más pequeñas en 340x340 píxeles. 
 Estas subimágenes cuadradas se utilizan para entrenar un modelo de clasificación que identificará la presencia de humanos en las imágenes. 
 
 Además, se incluye para cada subimagen su correspondiente .xml con el mismo nombre, el cual incluye la presencia o no de humanos en coordenadas (x,y)
