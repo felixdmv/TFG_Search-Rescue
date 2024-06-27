@@ -5,8 +5,8 @@ imagenes:
   margins: [35, 35]         # Margen a partir del cual se crea una subimagen en la derecha o abajo de la imagen original: [a lo ancho, a lo alto]
 
 
-sliderUmbralPrediccion: [0.0, 1.0, 0.8, 0.01]
-numberInputNumColumnas: [1, 5, 3]
-numColumnasTablaDurantePrediccion: 8 
-anchoLineaRectangulos: 6
-colorRectangulos: 'red'
+sliderUmbralPrediccion: [0.0, 1.0, 0.8, 0.01] # [min, max, default, step]
+numberInputNumColumnas: [1, 5, 3] # [min, max, default]
+numColumnasTablaDurantePrediccion: 8 # Número de columnas de la tabla de resultados durante la predicción
+anchoLineaRectangulos: 6 # Ancho de la línea de los rectángulos en píxeles
+colorRectangulos: 'red' # Color de los rectángulos de la predicción
