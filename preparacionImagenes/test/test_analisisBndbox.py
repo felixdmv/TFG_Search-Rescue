@@ -1,7 +1,9 @@
 import pytest
-from unittest.mock import patch, MagicMock, mock_open
+from unittest.mock import patch, mock_open
 
-from preparacionImagenes.src.analisisBndbox import analizaBndbox, generaInformeBndbox
+import settings
+from settings import ROOT_TFG, ROOT_PREPARACIONIMAGENES, PATH_INFORMEBND
+from preparacionImagenes.src.analisisBndbox import generaInformeBndbox
 
 
 
