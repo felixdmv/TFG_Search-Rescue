@@ -17,5 +17,6 @@ PATH_PARAMETROS = ROOT_WEBAPP.joinpath('config', 'parametros.yaml')
 PATH_COLECCIONESIMAGENES = ROOT_WEBAPP.joinpath('coleccionesImagenes')
 PATH_LOGO = ROOT_WEBAPP.joinpath('static', 'logoGICAP.jpg')
 
-URL_LOGO = 'https://gicap.ubu.es/main/grupo.shtml'
+URL_LOGO = 'https://gicap.ubu.es/main/home.shtml'
+
 DESCRIPCION_COLECCION = 'descripcion.yaml'
