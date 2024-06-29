@@ -115,17 +115,11 @@ def cargaColecciones(path):
     Returns:
         dict: A dictionary mapping collection names to their paths.
     """
-    st.write(f'Cargando colecciones de imágenes desde {path}')
     coleccionesPath = [f for f in path.iterdir()]
-    st.write(f'Encontradas {len(coleccionesPath)} colecciones de imágenes')
     nombresColeccionesYPath = {}
     for path in coleccionesPath:
-        st.write(f'Cargando colección {path.name}')
         parametros = cargaParametrosConfiguracion(path.joinpath(settings.DESCRIPCION_COLECCION))
-        st.write(f'Colección {path.name} cargada')
-        st.write(f'Descripción: {parametros}')
         nombresColeccionesYPath[parametros['nombre']] = path
-        st.write(f'Nombre: {parametros["nombre"]}, Path: {path}')
     return nombresColeccionesYPath
 
 
