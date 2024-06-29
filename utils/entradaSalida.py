@@ -2,7 +2,7 @@ import json
 from PIL import Image
 import yaml
 import gdown
-import os
+import os, sys
 from defusedxml import ElementTree as ET
 
 def cargaParametrosConfiguracionYAML(ficheroConfiguracion):
