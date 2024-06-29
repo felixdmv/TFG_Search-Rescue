@@ -98,7 +98,7 @@ def cargaModeloH5(nombreModelo, urlModelo):
 
     """
     ficheroModelo = nombreModelo # + '.h5'
-    es.cargaArchivoDrive(urlModelo, ficheroModelo) # Cargalocalmente el modelo desde Drive
+    es.cargaArchivoDrive(urlModelo, ficheroModelo) # Carga localmente el modelo desde Drive
     return pred.cargaModelo(ficheroModelo)
 
 st.cache_data(ttl=3600)  # 1 hora de persistencia
@@ -184,7 +184,9 @@ def seleccionModelo():
 
 def cargandoModelo():
     with st.spinner(f'Cargando modelo {st.session_state.nombreModelo}...'):
+        st.write(f'Cargando modelo {st.session_state.nombreModelo}...')
         urlModelo = st.session_state.enlacesModelos[st.session_state.nombreModelo]
+        st.write(f'Cargando modelo desde {urlModelo}')
         # paso str(st.session_state.nombreModelo) porque parece que no es cacheable un
         # argumento que es una variable st.session_state
         st.session_state['modelo'] = cargaModeloH5(str(st.session_state.nombreModelo), urlModelo)
