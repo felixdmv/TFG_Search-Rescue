@@ -123,6 +123,7 @@ def cargaColecciones(path):
         st.write(f'Cargando colección {path.name}')
         parametros = cargaParametrosConfiguracion(path.joinpath(settings.DESCRIPCION_COLECCION))
         st.write(f'Colección {path.name} cargada')
+        st.write(f'Descripción: {parametros}')
         nombresColeccionesYPath[parametros['nombre']] = path
         st.write(f'Nombre: {parametros["nombre"]}, Path: {path}')
     return nombresColeccionesYPath
