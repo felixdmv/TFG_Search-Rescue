@@ -187,9 +187,7 @@ def seleccionModelo():
 
 def cargandoModelo():
     with st.spinner(f'Cargando modelo {st.session_state.nombreModelo}...'):
-        st.write(f'Cargando modelo {st.session_state.nombreModelo}...')
         urlModelo = st.session_state.enlacesModelos[st.session_state.nombreModelo]
-        st.write(f'Cargando modelo desde {urlModelo}')
         # paso str(st.session_state.nombreModelo) porque parece que no es cacheable un
         # argumento que es una variable st.session_state
         st.session_state['modelo'] = cargaModeloH5(str(st.session_state.nombreModelo), urlModelo)
