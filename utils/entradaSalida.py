@@ -2,6 +2,7 @@ import json
 from PIL import Image
 import yaml
 import gdown
+import os
 from defusedxml import ElementTree as ET
 
 def cargaParametrosConfiguracionYAML(ficheroConfiguracion):
@@ -24,7 +25,21 @@ def cargaArchivoDrive(url, output):
     Returns:
         None
     """
-    gdown.download(url, output, quiet=False)
+    #gdown.download(url, output, quiet=False)
+    
+    try:
+        with open(os.devnull, 'w') as fnull:
+            old_stderr = sys.stderr
+            old_stdout = sys.stdout
+            sys.stderr = fnull
+            sys.stdout = fnull
+            try:
+                gdown.download(url, output, quiet=False)
+            finally:
+                sys.stderr = old_stderr
+                sys.stdout = old_stdout
+    except Exception as e:
+        st.error(f"Error al descargar el archivo: {e}")
 
 def cargaParametrosProcesamiento(ficheroParametros):
     with open(ficheroParametros, 'r') as archivo:
