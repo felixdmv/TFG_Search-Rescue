@@ -103,6 +103,7 @@ def cargaModeloH5(nombreModelo, urlModelo):
         return pred.cargaModelo(ficheroModelo)
     except Exception as e:
         st.error(f"Error al descargar el archivo: {e}")
+        st.stop()
     
 
 st.cache_data(ttl=3600)  # 1 hora de persistencia
