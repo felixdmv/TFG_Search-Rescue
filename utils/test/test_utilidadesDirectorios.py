@@ -59,14 +59,16 @@ def test_buscaFicheroMismoNombreBase(setup_test_files):
     assert buscaFicheroMismoNombreBase(file_path, "jpg") is None
 
 def test_obtienePathFromBasename():
-    assert obtienePathFromBasename("/path/to", "file", "txt") == "/path/to/file.txt"
-    assert obtienePathFromBasename("path", "file", "jpg") == "path/file.jpg"
+    assert os.path.normpath(obtienePathFromBasename("/path/to", "file", "txt")) == os.path.normpath("/path/to/file.txt")
+    assert os.path.normpath(obtienePathFromBasename("path", "file", "jpg")) == os.path.normpath("path/file.jpg")
 
 def test_creaPathDirectorioMismoNivel():
-    assert creaPathDirectorioMismoNivel("/path/to/file.txt", "newdir") == "/path/to/newdir"
+    assert os.path.normpath(creaPathDirectorioMismoNivel("/path/to/file.txt", "newdir")) == os.path.normpath("/path/to/newdir")
+    assert os.path.normpath(creaPathDirectorioMismoNivel("C:\\path\\to\\file.txt", "newdir")) == os.path.normpath("C:\\path\\to\\newdir")
 
 def test_creaPathDirectorioNivelInferior():
-    assert creaPathDirectorioNivelInferior("/path/to", "subdir") == "/path/to/subdir"
+    assert os.path.normpath(creaPathDirectorioNivelInferior("/path/to", "subdir")) == os.path.normpath("/path/to/subdir")
+    assert os.path.normpath(creaPathDirectorioNivelInferior("C:\\path\\to", "subdir")) == os.path.normpath("C:\\path\\to\\subdir")
 
 def test_existePath(setup_test_files):
     test_dir = setup_test_files

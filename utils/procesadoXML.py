@@ -1,6 +1,6 @@
 import os
-from defusedxml.ElementTree import parse
-from xml.etree.ElementTree import Element, SubElement, ElementTree, tostring
+from defusedxml.ElementTree import parse, tostring, Element, SubElement, ElementTree
+#from xml.etree.ElementTree import Element, SubElement, ElementTree, tostring
 import xml.dom.minidom
 
 from utils.utilidadesDirectorios import creaPathDirectorioNivelInferior
