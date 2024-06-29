@@ -98,12 +98,10 @@ def cargaModeloH5(nombreModelo, urlModelo):
 
     """
     ficheroModelo = nombreModelo # + '.h5'
-    try:
-        es.cargaArchivoDrive(urlModelo, ficheroModelo) # Carga localmente el modelo desde Drive
-        return pred.cargaModelo(ficheroModelo)
-    except Exception as e:
-        st.error(f"Error al descargar el archivo: {e}")
-        st.stop()
+    
+    es.cargaArchivoDrive(urlModelo, ficheroModelo) # Carga localmente el modelo desde Drive
+    return pred.cargaModelo(ficheroModelo)
+    
     
 
 st.cache_data(ttl=3600)  # 1 hora de persistencia
