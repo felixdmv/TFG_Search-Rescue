@@ -1,17 +1,4 @@
-# Monorepo
-
-Este es el repositorio principal que contiene varios subproyectos relacionados. A continuación se muestra una descripción general de cada subproyecto y cómo empezar a trabajar con ellos.
-
-## Subproyectos
-
-- [Subproyecto 1](subproject1/README.md): Descripción breve del subproyecto 1.
-- [Subproyecto 2](subproject2/README.md): Descripción breve del subproyecto 2.
-
-## Estructura del Repositorio
-
-
-
-# web app
+# webApp
 - Crear carpeta del proyecto --> tfg
 - Inicilaizar git dentro de la carpeta --> `git init`
 - Crear un entorno virtual desde Anaconda Prompt --> `conda create -n tfg`
