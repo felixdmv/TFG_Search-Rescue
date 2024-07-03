@@ -1,46 +1,45 @@
 analisis:
   objetivo: 'Hay humano'                # id del problema a abordar, debe ser una columna presente en el fichero_csv ; ademas se usara como parte del id de la ejecucion del entrenamiento
   clases: ['no','si']                   # si problema=clasificacion, lista de clases ; si ademas tipo=binaria, la primera clase son controles y la segunda casos ; si no, dejar como lista vacia
-  fichero_csv: '../imagenes/_Todos.csv'   # fichero con una linea por muestra, distintos objetivos a analizar, y el particionado en cajas de las muestras para una validacion cruzada
-  estrategia_entreno: 'todo'            # todo=un entrenamiento simple con toda la caja train | iterativo=entrenamiento iterativo con subconjuntos balanceados de la caja de train 
-  data_augmentation: 0                  # 1=aplicar data augmentation al vuelo sobre el conjunto de training ; 0=sin data augmentation
+  ficheroCsv: '../imagenes/_Todos.csv'   # fichero con una linea por muestra, distintos objetivos a analizar, y el particionado en cajas de las muestras para una validacion cruzada
+  estrategiaEntreno: 'todo'            # todo=un entrenamiento simple con toda la caja train | iterativo=entrenamiento iterativo con subconjuntos balanceados de la caja de train 
+  dataAugmentation: 0                  # 1=aplicar data augmentation al vuelo sobre el conjunto de training ; 0=sin data augmentation
 
   thresholds: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]                # criterio para identificar el umbral donde binarizar las probabilidades orientados a mejorar una metrica: 'f1score' | 'au-roc' | 'prec'
   
   cviter: 3                             # iteracion de una validacion cruzada, por ejemplo si es un 5-k-fold, un numero del 1 al 5
-  id_gpu: 0                             # id de la GPU en la que ejecutar el script, en caso de haber mas de una (empieza en la 0, 1, ...) ; para ejecutar en CPU, fijar a -1
+  idGpu: 0                             # id de la GPU en la que ejecutar el script, en caso de haber mas de una (empieza en la 0, 1, ...) ; para ejecutar en CPU, fijar a -1
   numberofboxes: 5 # Para el entrenamiento_cruzado
 
 paths:
   imagenes: "../imagenes"
-  datos_entreno: "../datos_entreno"
-  modelos_pretrained: "../modelos"
+  datosEntreno: "../datosEntreno"
   temporal: "../tmp"
   resultados: "../resultados"
 
-red_neuronal:
+redNeuronal:
   #arquitectura de la red
   #modelo_base: 'ResNet50V2'            # nombre de la red preentrenada que se quiere usar como base para hacer transfer learning (el fichero .h5 debe estar en el path de modelos_pretrained)
-  capas_densas: 1                       # numero de capas ocultas fully-connected
-  neuronas_por_capa:                    # incluir tantas lineas como numero de capas_densas
+  capasDensas: 1                       # numero de capas ocultas fully-connected
+  neuronasPorCapa:                    # incluir tantas lineas como numero de capas_densas
     - 4000
-  activacion_por_capa:                  # incluir tantas lineas como numero de capas_densas, relu | ...
+  activacionPorCapa:                  # incluir tantas lineas como numero de capas_densas, relu | ...
     - "relu"
-  dropout_por_capa:                     # incluir tantas lineas como numero de capas_densas, si no se quiere aplicar dropout a la capa i-esima, poner 0
+  dropoutPorCapa:                     # incluir tantas lineas como numero de capas_densas, si no se quiere aplicar dropout a la capa i-esima, poner 0
     - 0
 
   #model.compile
-  learning_rate: 0.001                  # tasa de aprendizaje ; valores altos (0.01 o 0.1) entrenara mas rapido pero será intestable ; valores pequeños (0.0001 o menos) será mas estable, pero tardará en aprender o incluso no logre hacerlo
-  decay_steps: 30000                    # numero de paso tras los que ajustar la learning_rate; revisar cuantos pasos hay en una epoca, y en base a ello y cada cuantas epocas queremos actualizar la lr, fijamos este parametro
-  decay_rate: 0.95                      # la nueva learning rate será la actual multiplicado por este parámetro
+  learningRate: 0.001                  # tasa de aprendizaje ; valores altos (0.01 o 0.1) entrenara mas rapido pero será intestable ; valores pequeños (0.0001 o menos) será mas estable, pero tardará en aprender o incluso no logre hacerlo
+  decaySteps: 30000                    # numero de paso tras los que ajustar la learning_rate; revisar cuantos pasos hay en una epoca, y en base a ello y cada cuantas epocas queremos actualizar la lr, fijamos este parametro
+  decayRate: 0.95                      # la nueva learning rate será la actual multiplicado por este parámetro
   metrica: 'auroc'                      # metrica a monitorizar para ver que el modelo va aprendiendo y no sobreentrena, aupr | auroc | precision | recall | rec@prec
   #early stopping
   patience: 5
-  start_from_epoch: 8
+  startFromEpoch: 8
   #image data generators
   color: 'rgb'
-  train_batch_size: 32
-  val_batch_size: 256
-  test_batch_size: 256
+  trainBatchSize: 32
+  valBatchSize: 256
+  testBatchSize: 256
   #model.fit
   epochs: 100
