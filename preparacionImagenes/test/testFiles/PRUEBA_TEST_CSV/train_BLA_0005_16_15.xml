@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<annotation>
+	<object>
+		<name>human</name>
+		<pose>unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>101</xmin>
+			<xmax>154</xmax>
+			<ymin>169</ymin>
+			<ymax>228</ymax>
+		</bndbox>
+	</object>
+</annotation>

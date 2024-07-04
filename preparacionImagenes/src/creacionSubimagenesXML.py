@@ -46,6 +46,7 @@ def creaSubimagenesYXML(subimagesPath, pathYNames, configuracion):
     subimageTypePath = ud.creaPathDirectorioNivelInferior(subimagesPath, imageType)
     listaBndbox = getListaBndbox(xmlPath)
 
+
     # Si garantizamos que las imágenes son del mismo tamaño, podríamos crear la lista de rectángulos
     # una sola vez fuera de esta función y pasarla como parámetro
     listaRectangulosConIndices = creaListaRectangulosConIndices(image.size, subimageSize, overlap, margins)

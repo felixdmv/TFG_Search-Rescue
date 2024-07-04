@@ -1,37 +1,34 @@
 import pytest
 from unittest.mock import patch, mock_open
+from src.analisisFicheros import generaInformeAnalisisFicheros
 
-import settings
-from settings import ROOT_TFG, ROOT_PREPARACIONIMAGENES, PATH_PARAMETROS, PATH_INFORMEBND, PATH_INFORMEANALISISFICHEROS
-from preparacionImagenes.src.analisisFicheros import generaInformeAnalisisFicheros, main
+# # Fixture de mock para cargaParametrosConfiguracionYAML
+# @pytest.fixture
+# def mock_cargaParametrosConfiguracionYAML():
+#     with patch('utils.entradaSalida.cargaParametrosConfiguracionYAML') as mock:
+#         mock.return_value = {
+#             'dataSet': {
+#                 'labelsSubfolder': 'labels'
+#             }
+#         }
+#         yield mock
 
-# Fixture de mock para cargaParametrosConfiguracionYAML
-@pytest.fixture
-def mock_cargaParametrosConfiguracionYAML():
-    with patch('utils.entradaSalida.cargaParametrosConfiguracionYAML') as mock:
-        mock.return_value = {
-            'dataSet': {
-                'labelsSubfolder': 'labels'
-            }
-        }
-        yield mock
+# # Fixture de mock para seleccionaDirectorio
+# @pytest.fixture
+# def mock_seleccionaDirectorio():
+#     with patch('utils.dialogoFicheros.seleccionaDirectorio') as mock:
+#         mock.return_value = '/path/to/dataset'
+#         yield mock
 
-# Fixture de mock para seleccionaDirectorio
-@pytest.fixture
-def mock_seleccionaDirectorio():
-    with patch('utils.dialogoFicheros.seleccionaDirectorio') as mock:
-        mock.return_value = '/path/to/dataset'
-        yield mock
-
-# Fixture de mock para open
-@pytest.fixture
-def mock_open_func():
-    with patch('builtins.open', mock_open()) as m:
-        yield m
+# # Fixture de mock para open
+# @pytest.fixture
+# def mock_open_func():
+#     with patch('builtins.open', mock_open()) as m:
+#         yield m
 
 @patch('builtins.open', new_callable=mock_open)
 def test_generaInformeAnalisisFicheros(mock_file):
-    ficheroInforme = str(settings.PATH_INFORMEANALISISFICHEROS)
+    ficheroInforme = 'prueba.txt' 
     imagenesSinXML = {'imagen1', 'imagen2'}
     xmlSinImagen = {'archivo1'}
     

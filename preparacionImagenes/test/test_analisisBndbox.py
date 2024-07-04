@@ -1,9 +1,7 @@
 import pytest
 from unittest.mock import patch, mock_open
 
-import settings
-from settings import ROOT_TFG, ROOT_PREPARACIONIMAGENES, PATH_INFORMEBND
-from preparacionImagenes.src.analisisBndbox import generaInformeBndbox
+from src.analisisBndbox import generaInformeBndbox
 
 
 
