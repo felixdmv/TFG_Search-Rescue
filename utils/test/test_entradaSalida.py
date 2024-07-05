@@ -1,7 +1,6 @@
 import os
 import pytest
 import json
-import yaml
 from unittest.mock import patch, mock_open
 from PIL import Image
 from utils.entradaSalida import cargaParametrosConfiguracionYAML, cargaArchivoDrive, cargaParametrosProcesamiento, rectangulosEtiquetados, cargaImagen
