@@ -1,4 +1,4 @@
-import settings
+import settingsPreparacion as settings
 from utils.utilidadesDirectorios import obtienePathFicheros
 from utils.dialogoFicheros import seleccionaDirectorio
 from utils.procesadoXML import getListaBndbox
