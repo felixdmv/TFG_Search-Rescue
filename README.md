@@ -1,16 +1,13 @@
 # Search & Rescue - TFG
 
-<div align="center">
-    <img src="img/logoProyecto.png" alt="Logo del Proyecto" width="200"/>
-</div>
-
 ## Descripción
 
 Este repositorio contiene el código desarrollado para el Trabajo Fin de Grado:  
   
 "Sistema de visión artificial para detección de personas en entornos naturales a partir de imágenes tomadas desde un dron"  
   
-Está organizado en tres subproyectos: preparación de imágenes, entrenamiento de redes neuronales convolucionales (CNNs) y una aplicación web (WebApp).  
+Está organizado en tres subproyectos: preparación de imágenes, entrenamiento de redes neuronales convolucionales (CNNs) y una aplicación web (WebApp).
+Se incluyen además scripts en utils que se usan desde varios subproyectos.
 Cada subproyecto está cuidadosamente estructurado para facilitar su comprensión y reproducibilidad.
 
 
@@ -32,11 +29,12 @@ La estructura general del proyecto es la siguiente:
 En el directorio raíz se encuentran las siguientes carpetas y archivos:
 
 - **\_\_init\_\_.py**: Añade el directorio `utils` al path para permitir la importación de módulos.
+- **pytest.ini**: Configura el framework de pruebas pytest, para la ejecución automática de pruebas.
 - **.gitignore**: Especifica los archivos que Git debe ignorar.
 
 ### Subproyecto de Preparación de Imágenes
 
-Este subproyecto se divide en tres carpetas:
+Este subproyecto se divide en:
 
 - **config**: Contiene un archivo de configuración `.yaml` con parámetros del recorte, rutas y extensiones.
 - **informes**: Almacena los análisis estadísticos del dataset antes y después del procesado.
@@ -44,7 +42,7 @@ Este subproyecto se divide en tres carpetas:
 
 ### Subproyecto de Entrenamiento de CNNs
 
-Este subproyecto se organiza en dos carpetas:
+Este subproyecto se organiza en:
 
 - **codigo**: Script de entrenamiento de CNNs y archivo de configuración `.yaml`.
 - **imagenes**: Subimágenes recortadas y CSVs para la validación cruzada.
@@ -60,7 +58,7 @@ Durante la ejecución, se crean y borran automáticamente dos carpetas:
 
 ### Subproyecto de WebApp
 
-La WebApp se divide en cuatro carpetas:
+La WebApp se divide en:
 
 - **coleccionesImagenes**: Contiene colecciones de imágenes de ejemplo.
 - **config**: Contiene un archivo de configuración `.yaml` con parámetros de solapamiento, márgenes y extensiones.
