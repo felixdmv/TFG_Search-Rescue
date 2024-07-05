@@ -8,7 +8,6 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense #Para la AlexNet
 from keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, precision_recall_curve, roc_auc_score, auc, cohen_kappa_score, confusion_matrix
 from keras.layers import BatchNormalization
-import visualkeras
 from keras.callbacks import Callback
 import keras.backend as K
 
@@ -97,7 +96,7 @@ def inicializarCallbacks(paths, dateTime, analisis, paramsRed, monitor, mode):
     #es = EarlyStopping(monitor=monitor, mode=mode, patience=paramsRed['patience'], restore_best_weights=True, start_from_epoch=paramsRed['start_from_epoch'])
     mes = MultiEarlyStopping(prim_monitor=monitor, second_monitor='val_loss', prim_mode=mode, second_mode='min', patience=paramsRed['patience'], restore_best_weights=True, start_from_epoch=paramsRed['startFromEpoch'])
     filename = f"AlexNet{analisis['cviter']}.{dateTime}."
-    ckpt = ModelCheckpoint(filepath=os.path.join(tmpDir, filename + 'weights.{epoch:03d}-{val_loss:.2f}.h5'),
+    ckpt = ModelCheckpoint(filepath=os.path.join(tmpDir, filename + 'weights.h5'),
                            monitor=monitor,
                            mode=mode,
                            save_weights_only=True,

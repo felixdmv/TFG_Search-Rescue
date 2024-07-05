@@ -4,6 +4,7 @@ import shutil
 import yaml
 import pandas as pd
 import tensorflow as tf
+from settingsEntrenamiento import PATH_PARAMETROS
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
@@ -234,7 +235,9 @@ def dataStructureForAnalysisDroneSAR(path, analisis, dateTime, iteracion = None)
     print(f"Caja validación: {idboxValidation}")
     print(f"Caja training: {idboxTraining}")
     
-    with open('./parametros.yaml', 'r') as archivoConfig:
+    #with open('./parametros.yaml', 'r') as archivoConfig:
+    
+    with open(str(PATH_PARAMETROS), 'r') as archivoConfig:    
         configuracion = yaml.safe_load(archivoConfig)
 
     paths = configuracion["paths"]
