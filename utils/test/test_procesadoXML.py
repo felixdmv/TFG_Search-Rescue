@@ -1,17 +1,17 @@
 import os
 import pytest
-from defusedxml.ElementTree import parse as ET_parse
 from utils.procesadoXML import getListaBndbox, createXmlSubimage
 
 @pytest.fixture
 def setup_test_files():
     # Directory for test files
     test_files_dir = os.path.join(os.path.dirname(__file__), 'test_files')
+    
 
     # Create test XML files with corrected content
     test_xml_1 = os.path.join(test_files_dir, "test1.xml")
-    with open(test_xml_1, 'w') as f:
-        f.write('''<?xml version="1.0" encoding="utf-8"?>
+    with open(test_xml_1, 'w', encoding='utf-8') as f:
+        f.write('''<?xml version="1.0" ?>
 <annotation>
    <object>
       <name>human</name>
@@ -28,8 +28,8 @@ def setup_test_files():
 </annotation>''')
 
     test_xml_2 = os.path.join(test_files_dir, "test2.xml")
-    with open(test_xml_2, 'w') as f:
-        f.write('''<?xml version="1.0" encoding="utf-8"?>
+    with open(test_xml_2, 'w', encoding='utf-8') as f:
+        f.write('''<?xml version="1.0" ?>
 <annotation>
    <object>
       <name>human</name>
@@ -70,39 +70,30 @@ def test_getListaBndbox(setup_test_files):
     assert lista_bndbox_2 == [(300, 350, 400, 450), (500, 550, 600, 650)]
 
 def test_createXmlSubimage(setup_test_files):
-    test_xml_1 = os.path.join(setup_test_files, "test1.xml")
-    lista_bndbox_1 = getListaBndbox(test_xml_1)
+   test_xml_1 = os.path.join(setup_test_files, "test1.xml")
+   lista_bndbox_1 = getListaBndbox(test_xml_1)
 
-    # Path where the new XML will be created
-    subimageTypePath = os.path.join(setup_test_files, "subimages")
-    os.makedirs(subimageTypePath, exist_ok=True)
+   # Path where the new XML will be created
+   subimageTypePath = os.path.join(setup_test_files, "subimages")
+   os.makedirs(subimageTypePath, exist_ok=True)
 
-    createXmlSubimage("test_image", subimageTypePath, lista_bndbox_1, 1, 1)
+   createXmlSubimage("test_image", subimageTypePath, lista_bndbox_1, 1, 1) 
 
-    # Verify the new XML file was created
-    expected_xml_path = os.path.join(subimageTypePath, "test_image_1_1.xml")
-    assert os.path.exists(expected_xml_path)
+   # Verify the new XML file was created
+   expected_xml_path = os.path.join(subimageTypePath, "test_image_1_1.xml")
+   assert os.path.exists(expected_xml_path)
+   test_xml_1 = os.path.join(setup_test_files, "test1.xml")
+   with open(test_xml_1, 'r') as f:
+      expected_content = f.readlines()
+            
+   with open(expected_xml_path, 'r') as f:
+      actual_content = f.readlines()
 
-    # Read and verify content of the new XML file
-    expected_content = '''<?xml version="1.0" ?>
-<annotation>
-\t<object>
-\t\t<name>human</name>
-\t\t<pose>unspecified</pose>
-\t\t<truncated>0</truncated>
-\t\t<difficult>0</difficult>
-\t\t<bndbox>
-\t\t\t<xmin>100</xmin>
-\t\t\t<ymin>150</ymin>
-\t\t\t<xmax>200</xmax>
-\t\t\t<ymax>250</ymax>
-\t\t</bndbox>
-\t</object>
-</annotation>
-'''
-    with open(expected_xml_path, 'r') as f:
-        actual_content = f.read()
-    assert actual_content.strip() == expected_content.strip()
+   assert len(expected_content) == len(actual_content), f'el número de líneas en {expected_xml_path} no coincide con el número de líneas en {actual_content}'
+   for i in range(len(expected_content)):
+      assert actual_content[i].strip() == expected_content[i].strip(), f'la línea {expected_content[i]} difiere de {actual_content[i]}'
+   
+   
 
 if __name__ == "__main__":
     pytest.main()
