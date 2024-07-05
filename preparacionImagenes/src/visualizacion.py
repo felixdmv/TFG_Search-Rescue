@@ -1,5 +1,4 @@
-# Importa settings.py para configurar los paths
-import settings
+import settingsPreparacion as settings
 from utils.entradaSalida import cargaParametrosConfiguracionYAML, cargaImagen
 from utils.utilidadesDirectorios import buscaFicheroMismoNombreBase
 from utils.procesadoXML import getListaBndbox
