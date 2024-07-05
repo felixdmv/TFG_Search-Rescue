@@ -121,7 +121,7 @@ def test_cargaParametrosConfiguracionYAML(setup_test_files):
     assert config['param3']['subparam2'] == 'subvalue2'
 
 def test_cargaArchivoDrive():
-    real_url = "https://drive.google.com/uc?id=1euOXEopRtW0vLTizmBvTIkM6wVDi7bT3"
+    real_url = "https://drive.google.com/uc?id=1suPGFkdPGrPQdpsyyzrUH1EmNilq5ecP"
     fake_url = "https://drive.google.com/uc?id=fakeid1234"
     output_path = os.path.join(test_files_dir, 'downloaded_file.h5')
     
