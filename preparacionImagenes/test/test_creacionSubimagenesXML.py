@@ -3,7 +3,7 @@ import csv
 import os
 from pathlib import Path
 from src.creacionSubimagenesXML import creacionDirectoriosSubimagenes, creaPathsYNames, creaSubimagenesYXML
-from src.settings import PATH_PARAMETROS
+from preparacionImagenes.src.settingsPreparacion import PATH_PARAMETROS
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 from utils.utilidadesDirectorios import obtieneNombreBase
 
