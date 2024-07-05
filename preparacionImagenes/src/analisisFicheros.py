@@ -1,4 +1,4 @@
-import settings
+import settingsPreparacion as settings
 from utils.utilidadesDirectorios import obtieneNombresBase
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 from utils.dialogoFicheros import seleccionaDirectorio
