@@ -1,4 +1,4 @@
-import settings
+import settingsPreparacion as settings
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 import utils.utilidadesDirectorios as ud
 from utils.procesadoXML import getListaBndbox, createXmlSubimage
@@ -34,12 +34,10 @@ def situacionBndBox(listaBndbox, rectangulo):
             contadorFuera += 1
     return listaBndboxDentro, contadorFuera
 
-def creaSubimagenesYXML(subimagesPath, pathYNames, configuracion):
+def creaSubimagenesYXML(subimagesPath, pathYNames, subimageSize, overlap, margins):
     imagePath, xmlPath, imageName, imageType = pathYNames
     print(f"Procesando {imageName}...")
-    subimageSize = configuracion['subimages']['size']
-    overlap = configuracion['subimages']['overlap']
-    margins = configuracion['subimages']['margins']
+    
     
     image = Image.open(imagePath)
 
@@ -69,13 +67,14 @@ def creaSubimagenesYXML(subimagesPath, pathYNames, configuracion):
             numSubimagenesDescartadas += 1
     return len(listaRectangulosConIndices), numSubimagenesConHumano, numSubimagenesSinHumano, numSubimagenesDescartadas
 
-def creaPathsYNames(datasetPath, configuracion):
-    labelPath = datasetPath + '/' + configuracion['dataSet']['labelsSubfolder']
-    clasificaPorPatron = configuracion['dataSetTransformado']['clasificaPorPatron']
-    expresionRegular = configuracion['dataSetTransformado']['expresionRegular']
-    posicionPatron = configuracion['dataSetTransformado']['posicionPatron']
-    clasificaPorTipoImagen = configuracion['dataSetTransformado']['directorioUnico']
-    imagePaths = ud.obtienePathFicheros(datasetPath, configuracion['dataSet']['imageExtensions'])
+def creaPathsYNames(datasetPath, parametros):
+    labelPath = datasetPath + '/' + parametros['labelsSubfolder']
+    clasificaPorPatron = parametros['clasificaPorPatron']
+    expresionRegular = parametros['expresionRegular']
+    posicionPatron = parametros['posicionPatron']
+    clasificaPorTipoImagen = parametros['directorioUnico']
+    imagePaths = ud.obtienePathFicheros(datasetPath, parametros['imageExtensions'])
+
     xmlPaths = []
     imageNames = []
     tiposImagenes = []
@@ -162,7 +161,15 @@ def main():
         return
     
     print("Creación de listas de paths de imágenes y etiquetas, nombres de imágenes y tipos de imágenes")
-    listasPathsYNames = creaPathsYNames(datasetPath, configuracion)
+    
+    parametros = {}
+    parametros['labelsSubfolder'] = configuracion['dataSet']['labelsSubfolder']
+    parametros['clasificaPorPatron'] = configuracion['dataSetTransformado']['clasificaPorPatron']
+    parametros['expresionRegular'] = configuracion['dataSetTransformado']['expresionRegular']
+    parametros['posicionPatron'] = configuracion['dataSetTransformado']['posicionPatron']
+    parametros['directorioUnico'] = configuracion['dataSetTransformado']['directorioUnico']
+    parametros['imageExtensions'] = configuracion['dataSet']['imageExtensions']
+    listasPathsYNames = creaPathsYNames(datasetPath, parametros)
     
     print("Creación del directorio de subimágenes y subsubdirectorios por tipos de imágenes")
     subimagesPath = creacionDirectoriosSubimagenes(datasetPath, configuracion['dataSetTransformado']['subimagesFolder'], listasPathsYNames[3])
@@ -182,7 +189,10 @@ def main():
 
     for pathsYNames in zip(*listasPathsYNames):  # zip(*) * desempaqueta la lista de listas y zip empareja los elementos de las listas
         try:
-            numSubimagenes, numSubimagenesConHumano, numSubimagenesSinHumano, numSubimagenesDescartadas = creaSubimagenesYXML(subimagesPath, pathsYNames, configuracion)
+            subimageSize = configuracion['subimages']['size']
+            overlap = configuracion['subimages']['overlap']
+            margins = configuracion['subimages']['margins']
+            numSubimagenes, numSubimagenesConHumano, numSubimagenesSinHumano, numSubimagenesDescartadas = creaSubimagenesYXML(subimagesPath, pathsYNames, subimageSize, overlap, margins)
             imageType = pathsYNames[3]
             estadisticas[imageType]['numImagenes'] += 1
             estadisticas[imageType]['numSubimagenes'] += numSubimagenes
@@ -194,7 +204,8 @@ def main():
             print(f"Error procesando {pathsYNames[2]}: {str(e)}")
             return
 
-    ficheroInforme = configuracion['informes']['informeCreacionSubimagenes']
+    # ficheroInforme = configuracion['informes']['informeCreacionSubimagenes']
+    ficheroInforme =  settings.PATH_INFORMECREACIONSUBIMAGENES
     generaInformeCreacionSubimagenesXML(ficheroInforme, estadisticas, configuracion)
 
 if __name__ == '__main__':
