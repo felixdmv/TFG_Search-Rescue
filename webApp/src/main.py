@@ -1,4 +1,4 @@
-import settings
+import settingsWebApp as settings
 import utils.entradaSalida as es
 import utils.graficosImagenes as gi
 import prediccion as pred
@@ -60,6 +60,7 @@ def inicializaEstadosYFSM():
     st.session_state['numColumnasTablaDurantePrediccion'] = parametros['numColumnasTablaDurantePrediccion']
     st.session_state['anchoLineaRectangulos'] = parametros['anchoLineaRectangulos']
     st.session_state['colorRectangulos'] = parametros['colorRectangulos']
+    
 
 
 @st.cache_data(ttl=3600)  # 1 hora de persistencia
@@ -191,6 +192,8 @@ def cargandoModelo():
         # paso str(st.session_state.nombreModelo) porque parece que no es cacheable un
         # argumento que es una variable st.session_state
         st.session_state['modelo'] = cargaModeloH5(str(st.session_state.nombreModelo), urlModelo)
+    
+    
     if len(st.session_state['listaImagenes']):
         st.session_state.fsm.cargandoModelo_hayImagenes()
     else:
@@ -221,7 +224,7 @@ def muestraImagenes():
         textoBoton = f"Procesar imágenes seleccionadas localmente "
     else:
         textoBoton = f"Procesar imágenes de la colección {st.session_state.nombreColeccion}"
-    if st.button(textoBoton):
+    if st.button(textoBoton, key='botonProcesar'):
         st.session_state.fsm.hayImagenes_predicciones()
         st.rerun()
     st.session_state.numberInputNumColumnas[2] = st.number_input("Selecciona número de columnas de visualización",
@@ -277,11 +280,10 @@ def imagenesProcesadas():
 
     with st.spinner('Creando tabla de imágenes...'):
         wd.creaTablaImagenes(st.session_state['listaImagenesProcesadas'], st.session_state.numberInputNumColumnas[2])     
-        
     with st.container(border=True):
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("Volver a página principal"):
+            if st.button("Volver a página principal", key='botonVolverPaginaPrincipal'):
                 st.session_state.fsm.imagenesProcesadas_hayImagenes()
                 st.rerun()
         with col2:
@@ -307,7 +309,7 @@ def main():
         seleccionModelo()    
         seleccionImagenes()
     elif fsm.state == 'hayImagenes':
-        seleccionModelo()    
+        seleccionModelo()  
         seleccionImagenes()
         muestraImagenes()
     elif fsm.state == 'predicciones':
