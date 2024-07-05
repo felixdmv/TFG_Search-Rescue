@@ -2,13 +2,9 @@ import os
 import shutil
 import tempfile
 from PIL import Image
-import yaml
-from datetime import datetime
 import pandas as pd
 import pytest
-from settings_test import PATH_PARAMETROS
-from unittest.mock import patch, MagicMock
-from codigo.preparacion import (
+from src.preparacion import (
     copiarImagenes, copiarImagenesDf, crearDirstrucTrain, crearDirstrucVal, crearDirstruc
 )
 

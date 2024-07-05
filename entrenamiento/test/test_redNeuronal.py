@@ -8,8 +8,8 @@ from tensorflow import keras
 from tensorflow.keras.layers import Conv2D, Flatten, Dense
 import yaml
 from settings_test import PATH_PARAMETROS
-from codigo.redNeuronal import PrintLearningRate, MultiEarlyStopping
-from codigo.redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
+from src.redNeuronal import PrintLearningRate, MultiEarlyStopping
+from src.redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
 
 
 @pytest.fixture(scope="module")
