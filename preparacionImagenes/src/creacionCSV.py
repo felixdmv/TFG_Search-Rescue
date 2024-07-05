@@ -1,4 +1,4 @@
-import settings
+import settingsPreparacion as settings
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 import utils.utilidadesDirectorios as ud
 import utils.dialogoFicheros as dfich
