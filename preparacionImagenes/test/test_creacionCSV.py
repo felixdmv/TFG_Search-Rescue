@@ -36,20 +36,20 @@ def test_creacionCSV():
     # Número arbitrario de cajas para el test
     numCajas = 5
     # Nombre del directorio donde se encuentran las imágenes
-    nomFolder = 'PRUEBA_TEST_CSV'
+    nomFolder = 'PRUEBA_CREAR_CSV'
     # Nombre del archivo CSV que esperamos que se genere
-    nomFich = '_PRUEBA_TEST_CSV.csv'
+    nomFich = '_PRUEBA_CREAR_CSV.csv'
 
     
     # Obtener el directorio padre del archivo de prueba (donde se encuentra el directorio 'test')
     test_dir = Path(__file__).resolve().parents[0]
-    # Construir la ruta completa al directorio 'PRUEBA_TEST_CSV'
-    subimageTypePath = test_dir.joinpath('testFiles/' +nomFolder)
-    # Ruta donde debería crearse el archivo _PRUEBA_TEST_CSV.csv
+    # Construir la ruta completa al directorio 'PRUEBA_CREAR_CSV'
+    subimageTypePath = test_dir.joinpath('test_files/' +nomFolder)
+    # Ruta donde debería crearse el archivo _PRUEBA_CREAR_CSV.csv
     csvFilepath_expected = subimageTypePath.joinpath(nomFich)
     
     
-    # Asegurarse de que el directorio PRUEBA_TEST_CSV existe
+    # Asegurarse de que el directorio PRUEBA_CREAR_CSV existe
     subimageTypePath.mkdir(parents=True, exist_ok=True)
     
     # Eliminar el archivo CSV si ya existe
