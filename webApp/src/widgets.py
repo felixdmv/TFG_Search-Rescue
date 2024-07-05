@@ -87,6 +87,21 @@ def cargaImagenesLocal():
         st.session_state.selectBoxColeccionImagenes = None  # Para que se muestre el selectbox con la nueva colección
         st.rerun()  # Para forzar a mostrar un nuevo file_uploader
                 
+def actualizaColeccion(nombresColecciones):
+    nombreColeccion = st.session_state.selectBoxColeccionImagenes
+    if nombreColeccion is not None:
+        st.session_state.indiceColeccion = nombresColecciones.index(nombreColeccion)
+        if st.session_state.nombreColeccion != nombreColeccion:
+            st.session_state.nombreColeccion = nombreColeccion
+            pathColeccion = st.session_state.nombresColeccionesYPath[nombreColeccion]
+            pathImagenes = [str(f) for f in pathColeccion.iterdir() if f.suffix.lower() == '.jpg']
+            cargaImagenesYNombres(pathImagenes, local=False)
+            st.session_state.listaImagenesLocal = False
+            
+    else:
+        st.session_state.indiceColeccion = None
+        st.session_state.nombreColeccion = None
+
 def cargaImagenesServidor():
     nombresColecciones = sorted(list(st.session_state.nombresColeccionesYPath.keys()))
     if st.session_state.nombreColeccion is None:
@@ -95,16 +110,12 @@ def cargaImagenesServidor():
     nombreColeccion = st.selectbox(label='Elige una colección',
                                                     key='selectBoxColeccionImagenes',
                                                     index=st.session_state.indiceColeccion,
-                                                    options=nombresColecciones)
+                                                    options=nombresColecciones,
+                                                    on_change=actualizaColeccion,
+                                                    args=(nombresColecciones,))
     
-    if nombreColeccion is not None and nombreColeccion != st.session_state.nombreColeccion:
-        st.session_state.nombreColeccion = nombreColeccion
-        pathColeccion = st.session_state.nombresColeccionesYPath[st.session_state.nombreColeccion]
-        pathImagenes = [str(f) for f in pathColeccion.iterdir() if f.suffix == '.JPG']
-        cargaImagenesYNombres(pathImagenes, local=False)
-        st.session_state.listaImagenesLocal = False
 
-    if st.session_state.listaImagenesLocal == False and nombreColeccion is None:
+    if st.session_state.listaImagenesLocal == False and st.session_state.nombreColeccion is None:
         st.session_state.listaImagenes = []
         st.session_state.nombresImagenes = []
         st.session_state.nombreColeccion = None
