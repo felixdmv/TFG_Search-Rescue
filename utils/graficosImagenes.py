@@ -25,6 +25,20 @@ def dibujaRectangulos(image, listaRectangulos, ancho=4, color='red'):
     return imagenCopia
 
 def creaListaRectangulosConIndices(imageSize, subimageSize, overlap, margins):
+    """
+    Creates a list of rectangles with corresponding indices based on the given parameters.
+
+    Args:
+        imageSize (tuple): A tuple containing the width and height of the image.
+        subimageSize (tuple): A tuple containing the width and height of each subimage.
+        overlap (tuple): A tuple containing the amount of overlap in the x and y directions.
+        margins (tuple): A tuple containing the margin size in the x and y directions.
+
+    Returns:
+        list: A list of tuples, where each tuple contains a rectangle defined by its coordinates (left, upper, right, lower)
+        and its corresponding indices (col, fil).
+
+    """
     width, height = imageSize
     subimageSize_x, subimageSize_y = subimageSize
     overlap_x, overlap_y = overlap
@@ -60,6 +74,18 @@ def creaListaRectangulosConIndices(imageSize, subimageSize, overlap, margins):
     return listaRectangulosConIndices
 
 def creaListaRectangulos(imageSize, subimageSize, overlap, margins):
+    """
+    Creates a list of rectangles based on the given parameters.
+
+    Args:
+        imageSize (tuple): The size of the image (width, height).
+        subimageSize (tuple): The size of each subimage (width, height).
+        overlap (tuple): The amount of overlap between subimages (overlap_x, overlap_y).
+        margins (tuple): The size of the margins (margin_x, margin_y).
+
+    Returns:
+        list: A list of rectangles represented as tuples (left, upper, right, lower).
+    """
     width, height = imageSize
     subimageSize_x, subimageSize_y = subimageSize
     overlap_x, overlap_y = overlap

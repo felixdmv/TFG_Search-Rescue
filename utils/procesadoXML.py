@@ -4,6 +4,16 @@ import xml.dom.minidom
 from utils.utilidadesDirectorios import creaPathDirectorioNivelInferior
 
 def getListaBndbox(xmlPath):
+    """
+    Retrieves a list of bounding boxes from an XML file.
+
+    Args:
+        xmlPath (str): The path to the XML file.
+
+    Returns:
+        list: A list of tuples representing the bounding boxes. Each tuple contains the coordinates (xmin, ymin, xmax, ymax).
+
+    """
     listaBndbox = []
     xmlTree = DET.parse(xmlPath) # Se cambia ET por DET para evitar ataques de inyección de entidades externas
     root = xmlTree.getroot()
@@ -20,7 +30,21 @@ def getListaBndbox(xmlPath):
 
     return listaBndbox
 
+
 def createXmlSubimage(imageName, subimageTypePath, listaBndbox, i, j):
+    """
+    Create an XML file for a subimage with bounding box annotations.
+
+    Args:
+        imageName (str): The name of the image.
+        subimageTypePath (str): The path to the subimage type.
+        listaBndbox (list): A list of bounding box coordinates in the format [xmin, ymin, xmax, ymax].
+        i (int): The row index of the subimage.
+        j (int): The column index of the subimage.
+
+    Returns:
+        None
+    """
     xmlSubimage = ET.Element('annotation')
     for bndBox in listaBndbox:
         xmin, ymin, xmax, ymax = bndBox
