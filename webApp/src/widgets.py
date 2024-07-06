@@ -2,10 +2,20 @@ import utils.entradaSalida as es
 import streamlit as st
 import utils.utilidadesDirectorios as ud
 
-
+# Se añaden los asteriscos por regla de estilo de Streamlit para separar los widgets entre sí
 
 #######################################################################################################################
 def selectboxSeleccionModelo(nombresModelos):
+    """
+    Returns a selectbox widget for selecting a model.
+
+    Args:
+        nombresModelos (list): A list of model names.
+
+    Returns:
+        str: The selected model name.
+
+    """
     if st.session_state['nombreModelo'] is None:
         indice = None
     else:
@@ -15,6 +25,21 @@ def selectboxSeleccionModelo(nombresModelos):
 
 #######################################################################################################################
 def sliderSolapamientos(size, solapamiento):
+    """
+    Function to create sliders for adjusting the overlap values.
+
+    Parameters:
+    - size (tuple): A tuple containing the width and height of the area.
+    - solapamiento (tuple): A tuple containing the initial overlap values.
+
+    Returns:
+    - tuple: A tuple containing the adjusted overlap values.
+
+    Example usage:
+    size = (800, 600)
+    solapamiento = (100, 50)
+    sliderSolapamientos(size, solapamiento)
+    """
     width, height = size
     solap_x, solap_y = solapamiento
     
@@ -29,6 +54,16 @@ def sliderSolapamientos(size, solapamiento):
 
 #######################################################################################################################
 def sliderMargenes(solapamiento, margenes):
+    """
+    Function to create sliders for adjusting margins.
+
+    Parameters:
+    solapamiento (tuple): A tuple containing the maximum values for solap_x and solap_y.
+    margenes (tuple): A tuple containing the current values for margen_x and margen_y.
+
+    Returns:
+    tuple: A tuple containing the updated values for margen_x and margen_y.
+    """
     margen_x, margen_y = margenes
     solap_x, solap_y = solapamiento
     
@@ -41,9 +76,18 @@ def sliderMargenes(solapamiento, margenes):
     return margen_x, margen_y
 #######################################################################################################################
 
-
 #######################################################################################################################
 def creaTablaImagenes(listaImagenes, n):
+    """
+    Crea una tabla de imágenes en la interfaz gráfica.
+
+    Parameters:
+    - listaImagenes (list): Una lista de imágenes.
+    - n (int): El número de columnas en la tabla.
+
+    Returns:
+    None
+    """
     grupos = []
     for i in range(0, len(listaImagenes), n):
         grupos.append(listaImagenes[i:i+n])
@@ -54,10 +98,19 @@ def creaTablaImagenes(listaImagenes, n):
             cols[i].image(imagen)
 #######################################################################################################################
 
-
-
 #######################################################################################################################
 def cargaImagenesYNombres(pathsImagenes, local=True):
+    """
+    Carga las imágenes y los nombres de archivo en el estado de sesión.
+
+    Args:
+        pathsImagenes (list): Una lista de rutas de archivo de imágenes.
+        local (bool, optional): Indica si se deben utilizar los nombres de archivo locales o los nombres de archivo base. 
+                                Por defecto es True.
+
+    Returns:
+        None
+    """
     st.session_state['listaImagenes'] = [es.cargaImagen(pathImagen) for pathImagen in pathsImagenes]
     if local:
         st.session_state['nombresImagenes'] = [pathImagen.name for pathImagen in pathsImagenes]
@@ -73,7 +126,14 @@ def actualizaClaveFileUploader():
     '''
     st.session_state['keyUploader'] += 1
     
+    
 def cargaImagenesLocal():
+    """
+    Function to load local images.
+
+    Returns:
+        None
+    """
     pathImagenes= st.file_uploader("Selecciona imágenes",
                                             accept_multiple_files=True,
                                             type=['jpg', 'jpeg', 'png'],
@@ -86,8 +146,18 @@ def cargaImagenesLocal():
         st.session_state.nombreColeccion = None  # Para que no haya dudas del origen de las imagenes
         st.session_state.selectBoxColeccionImagenes = None  # Para que se muestre el selectbox con la nueva colección
         st.rerun()  # Para forzar a mostrar un nuevo file_uploader
+       
                 
 def actualizaColeccion(nombresColecciones):
+    """
+    Actualiza la colección de imágenes seleccionada en la aplicación.
+
+    Args:
+        nombresColecciones (list): Una lista de nombres de colecciones disponibles.
+
+    Returns:
+        None
+    """
     nombreColeccion = st.session_state.selectBoxColeccionImagenes
     if nombreColeccion is not None:
         st.session_state.indiceColeccion = nombresColecciones.index(nombreColeccion)
@@ -102,7 +172,14 @@ def actualizaColeccion(nombresColecciones):
         st.session_state.indiceColeccion = None
         st.session_state.nombreColeccion = None
 
+
 def cargaImagenesServidor():
+    """
+    Carga las imágenes del servidor y actualiza las variables de estado correspondientes.
+
+    Returns:
+        None
+    """
     nombresColecciones = sorted(list(st.session_state.nombresColeccionesYPath.keys()))
     if st.session_state.nombreColeccion is None:
         st.session_state.indiceColeccion = None
@@ -123,10 +200,15 @@ def cargaImagenesServidor():
 
 #######################################################################################################################
 def formularioParametros():
+    """
+    Displays a form for selecting parameters and updates the session state with the selected values.
+
+    Returns:
+        None
+    """
     with st.expander("Selección de ajustes"):
         with st.form("Selección de ajustes", border=False):
             with st.container(border=True):
-                # *st.session_state.sliderUmbralPrediccion unpacks the tuple into individual arguments
                 umbral = st.slider('Umbral de predicción', *st.session_state.sliderUmbralPrediccion)
             with st.container(border=True):
                 solapamiento = sliderSolapamientos(st.session_state.sizeSubimagenes, st.session_state.overlap)

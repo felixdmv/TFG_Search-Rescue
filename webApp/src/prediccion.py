@@ -4,19 +4,51 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 import numpy as np
 from tensorflow.keras.utils import load_img, img_to_array
-from keras.src.saving.saving_api import load_model  # load_model en la bibliografía se importa de otras formas, que dan "aparente" error en VSC
+from keras.src.saving.saving_api import load_model
 
 
 def cargaModelo(ficheroModelo):
+    """
+    Loads a pre-trained model from a file.
+
+    Parameters:
+    ficheroModelo (str): The path to the model file.
+
+    Returns:
+    keras.models.Model: The loaded model.
+    """
     return load_model(ficheroModelo, compile=False)
 
+
 def cargaImagen1(ficheroImagen):
+    """
+    Carga una imagen desde un archivo.
+
+    Args:
+        ficheroImagen (str): La ruta del archivo de imagen a cargar.
+
+    Returns:
+        PIL.Image.Image: La imagen cargada.
+
+    """
     imagen = load_img(ficheroImagen, target_size=None) # target_size= None --> Se deja al tamaño original
     return imagen
 
+
 def cargaImagen(ficheroImagen):
+    """
+    Carga una imagen desde un archivo.
+
+    Args:
+        ficheroImagen (str): La ruta del archivo de imagen a cargar.
+
+    Returns:
+        PIL.Image.Image: La imagen cargada.
+
+    """
     imagen = load_img(ficheroImagen, target_size=None) # target_size= None --> Se deja al tamaño original
     return imagen
+
 
 def predice(modelo, imagen, listaRectangulos, batch_size=1):
     """
@@ -38,10 +70,5 @@ def predice(modelo, imagen, listaRectangulos, batch_size=1):
     for subimagen in listaSubimagenes:
         subimagen = np.expand_dims(subimagen, axis=0)
         salida.append(modelo.predict_on_batch(subimagen)[0])
-    # batch_size controla cuántas subimágenes se procesan a la vez. Experimentalmente he visto que todas
-    # de golpe parece que es más rápido, pero si hay muchas imágenes salta aviso de que no hay memoria.
-    # La idea parece ser que para grandes volúmenes de datos, ajustar el batch_size permite que quepa en memoria.
-    # En la nube falla incluso con batch_size bajoo, en local admite 100 sin problema
-    # Se deja a 1 para intentar que no falle en la nube,pero no es estable  
-    # return modelo.predict(np.array(listaSubimagenes), batch_size=batch_size, verbose=1)
+        
     return salida
