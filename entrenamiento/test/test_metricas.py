@@ -4,7 +4,7 @@ import pandas as pd
 from tensorflow.keras import models, layers
 from unittest.mock import MagicMock, patch
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from src.metricas import configurarMetrica, metricasBinclass, calcularRendimientoTest
+from metricas import configurarMetrica, metricasBinclass, calcularRendimientoTest
 
 @pytest.fixture(scope='module')
 def setup_data():

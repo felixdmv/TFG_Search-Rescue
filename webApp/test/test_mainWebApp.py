@@ -1,4 +1,4 @@
-from settings_test import PATH_MAIN
+from settingsWebApp_test import PATH_MAIN
 from streamlit.testing.v1 import AppTest
 import pytest
 

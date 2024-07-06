@@ -1,33 +1,19 @@
 import pytest
 from unittest.mock import patch, mock_open
-from src.analisisFicheros import generaInformeAnalisisFicheros
+from analisisFicheros import generaInformeAnalisisFicheros
 
-# # Fixture de mock para cargaParametrosConfiguracionYAML
-# @pytest.fixture
-# def mock_cargaParametrosConfiguracionYAML():
-#     with patch('utils.entradaSalida.cargaParametrosConfiguracionYAML') as mock:
-#         mock.return_value = {
-#             'dataSet': {
-#                 'labelsSubfolder': 'labels'
-#             }
-#         }
-#         yield mock
-
-# # Fixture de mock para seleccionaDirectorio
-# @pytest.fixture
-# def mock_seleccionaDirectorio():
-#     with patch('utils.dialogoFicheros.seleccionaDirectorio') as mock:
-#         mock.return_value = '/path/to/dataset'
-#         yield mock
-
-# # Fixture de mock para open
-# @pytest.fixture
-# def mock_open_func():
-#     with patch('builtins.open', mock_open()) as m:
-#         yield m
 
 @patch('builtins.open', new_callable=mock_open)
 def test_generaInformeAnalisisFicheros(mock_file):
+    """
+    Test case for the generaInformeAnalisisFicheros function.
+
+    Args:
+        mock_file: A mock object representing the file.
+
+    Returns:
+        None
+    """
     ficheroInforme = 'prueba.txt' 
     imagenesSinXML = {'imagen1', 'imagen2'}
     xmlSinImagen = {'archivo1'}

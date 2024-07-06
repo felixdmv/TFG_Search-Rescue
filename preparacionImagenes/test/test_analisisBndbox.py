@@ -1,13 +1,19 @@
 import pytest
 from unittest.mock import patch, mock_open
-
-from src.analisisBndbox import generaInformeBndbox
-
+from analisisBndbox import generaInformeBndbox
 
 
-# Pruebas para la función generaInformeBndbox
 @patch('builtins.open', new_callable=mock_open)
 def test_generaInformeBndbox(mock_file):
+    """
+    Test case for the generaInformeBndbox function.
+
+    Args:
+        mock_file: A mock file object used for testing.
+
+    Returns:
+        None
+    """
     ficheroInforme = 'path/to/informe.txt'
     salidaAnalisis = (4, 20, 20, 10, 10, 15.0, 15.0)
     
@@ -31,6 +37,7 @@ def test_generaInformeBndbox(mock_file):
     file_handle.write.assert_any_call("- Ancho medio: 15.0\n")
     file_handle.write.assert_any_call("- Alto medio: 15.0\n\n")
     file_handle.write.assert_any_call("\nFin del Informe")
+
 
 if __name__ == '__main__':
     pytest.main()

@@ -15,4 +15,4 @@ if ROOT_WEBAPP not in sys.path:
 if ROOT_SRC not in sys.path:
     sys.path.append(str(ROOT_SRC))
 
-PATH_MAIN = Path(__file__).parents[1].joinpath('src/main.py')
+PATH_MAIN = Path(__file__).parents[1].joinpath('src/mainWebApp.py')

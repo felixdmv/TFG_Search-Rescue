@@ -1,14 +1,9 @@
-import numpy as np
-import pandas as pd
 import pytest
-import yaml
 import os
 from unittest.mock import patch, MagicMock
 from datetime import datetime
-import tensorflow as tf
-from src.main import loadConfiguration, setupGPU, saveResults, cleanup, main
-from settings_test import PATH_PARAMETROS
-
+from src.mainEntrenamiento import loadConfiguration, cleanup
+from settingsEntrenamiento_test import PATH_PARAMETROS
 
 
 def test_loadConfiguration():

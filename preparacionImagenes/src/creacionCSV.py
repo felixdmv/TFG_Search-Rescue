@@ -7,8 +7,17 @@ import csv
 from sklearn.model_selection import StratifiedKFold
 
 
-# Función para crear el CSV
 def createCsv(subimageTypePath, numCajas):
+    """
+    Create a CSV file with information about the images in the given subimage type path.
+
+    Args:
+        subimageTypePath (str): The path to the subimage type directory.
+        numCajas (int): The number of boxes to split the subimages into.
+
+    Returns:
+        None
+    """
     nomFolder = ud.obtieneNombreBase(subimageTypePath)
     nomFich = '_' +  nomFolder + '.csv' 
     csvFilepath = ud.creaPathDirectorioNivelInferior(subimageTypePath, nomFich)  
@@ -48,6 +57,16 @@ def createCsv(subimageTypePath, numCajas):
 
 
 def main():
+    """
+    Main function for creating CSV files based on configuration settings.
+
+    This function loads the configuration parameters from a YAML file,
+    selects a directory for subimages, obtains the file paths for the subimages,
+    and creates CSV files for each subimage type.
+
+    Returns:
+        None
+    """
     configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
         print(f"Error cargando el fichero de configuración {settings.PATH_PARAMETROS}")
@@ -63,6 +82,7 @@ def main():
             createCsv(subimageTypePath, numCajas)
         except Exception as e:
             print(f"Error creando CSV's en {subimageTypePath}: {str(e)}")
+
 
 if __name__ == '__main__':
     main()

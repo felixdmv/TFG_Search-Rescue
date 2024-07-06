@@ -1,12 +1,25 @@
 import pytest
 from pathlib import Path
-from src.creacionSubimagenesXML import creacionDirectoriosSubimagenes, creaPathsYNames, creaSubimagenesYXML
-from src.settingsPreparacion import PATH_PARAMETROS
+from creacionSubimagenesXML import creacionDirectoriosSubimagenes, creaPathsYNames, creaSubimagenesYXML
+from settingsPreparacion_test import PATH_PARAMETROS
 from utils.entradaSalida import cargaParametrosConfiguracionYAML
 from utils.utilidadesDirectorios import obtieneNombreBase, borraDirectorioYContenido
 
+
 @pytest.fixture
 def parametros():
+    """
+    Returns a dictionary of parameters based on the configuration loaded from YAML file.
+
+    Returns:
+        dict: A dictionary containing the following parameters:
+            - 'labelsSubfolder': The subfolder for labels in the dataset.
+            - 'clasificaPorPatron': Flag indicating whether to classify by pattern.
+            - 'expresionRegular': The regular expression for pattern matching.
+            - 'posicionPatron': The position of the pattern in the transformed dataset.
+            - 'directorioUnico': Flag indicating whether to use a single directory for transformed images.
+            - 'imageExtensions': The allowed extensions for images in the dataset.
+    """
     configuracion = cargaParametrosConfiguracionYAML(PATH_PARAMETROS)
     parametros = {}
     parametros['labelsSubfolder'] = configuracion['dataSet']['labelsSubfolder']
@@ -17,8 +30,19 @@ def parametros():
     parametros['imageExtensions'] = configuracion['dataSet']['imageExtensions']
     return parametros
 
+
 @pytest.fixture
 def nombres():
+    """
+    Returns a dictionary containing different sets of names.
+
+    Returns:
+        dict: A dictionary with the following keys:
+            - 'setImageNames': A set of image names.
+            - 'tiposImagenes': A set of image types.
+            - 'archivosJPG': A set of JPG file names.
+            - 'archivosXML': A set of XML file names.
+    """
     nombres = {}
     nombres['setImageNames'] = {'train_BRA_1001', 'train_MED_3001', 'train_TRS_0003', 'train_BRK_1003', 'train_ZRI_2004',
                      'train_GOR_1002', 'train_RAK_0003', 'train_CAP_0003', 'train_BLA_0002', 'train_TRS_0002',
@@ -45,7 +69,18 @@ def nombres():
                             'train_BLA_0001_3_3.xml'}
     return nombres
     
+    
 def test_creaPathsYNames(parametros, nombres):
+    """
+    Test function for creaPathsYNames.
+
+    Args:
+        parametros (str): The parameters for creaPathsYNames.
+        nombres (dict): The dictionary containing the names.
+
+    Returns:
+        None
+    """
     # Nombre del directorio donde se encuentran las imágenes
     nomFolderImagenes = 'test_files/PRUEBA_CREAR_SUBIMAGENESXML'
     nomFolderLabeles = 'test_files/PRUEBA_CREAR_SUBIMAGENESXML/labels'
@@ -62,7 +97,6 @@ def test_creaPathsYNames(parametros, nombres):
     
     setXML = {setImageNames + '.xml' for setImageNames in setImageNames}
     setJPG = {setImageNames + '.JPG' for setImageNames in setImageNames}
-    
     
     # Creo conjunto de Paths esperados. Path() para evitar diferencias en / o \ o // o \\
     xmlPathsSet_expected = {Path(datasetLabelsPath.joinpath(f)) for f in setXML}
@@ -85,8 +119,17 @@ def test_creaPathsYNames(parametros, nombres):
     assert set(tiposImagenes) == tiposImagenes_expected, f"Los tipos de imágenes {set(tiposImagenes)} no coinciden con los esperados {tiposImagenes_expected}"
 
 
-# Test para la función creacionDirectoriosSubimagenes
 def test_creacionDirectoriosSubimagenes(parametros, nombres):
+    """
+    Test function to verify the creation of subdirectories for images.
+
+    Args:
+        parametros (dict): A dictionary containing parameters.
+        nombres (dict): A dictionary containing names.
+
+    Returns:
+        None
+    """
     # Nombre del directorio donde se encuentran las imágenes
     nomFolder = 'test_files/PRUEBA_CREAR_SUBIMAGENESXML'
     
@@ -110,7 +153,18 @@ def test_creacionDirectoriosSubimagenes(parametros, nombres):
     # Borrar directorio de subimágenes
     borraDirectorioYContenido(subimagesPath)
 
+
 def test_creaSubimagenesYXML(parametros, nombres):
+    """
+    Test function for creating subimages and XML files.
+
+    Args:
+        parametros (list): List of parameters.
+        nombres (dict): Dictionary of names.
+
+    Returns:
+        None
+    """
     # Nombre del directorio donde se encuentran las imágenes
     nomFolder = 'test_files/PRUEBA_CREAR_SUBIMAGENESXML'
     
@@ -128,9 +182,6 @@ def test_creaSubimagenesYXML(parametros, nombres):
     nombreImagen = 'train_BLA_0001'
     tipoImagen = 'BLA'
     
-    ancho = 40
-    alto = 30
-
     anchuraSubimagen = 20
     alturaSubimagen = 15
     solapamientoAncho = 11
@@ -167,7 +218,3 @@ def test_creaSubimagenesYXML(parametros, nombres):
 
     # Borrar directorio de subimágenes
     borraDirectorioYContenido(subimagesPath)
-
-
-
-  

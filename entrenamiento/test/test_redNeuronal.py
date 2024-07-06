@@ -4,8 +4,8 @@ import shutil
 from datetime import datetime
 from tensorflow import keras
 import yaml
-from settings_test import PATH_PARAMETROS
-from src.redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
+from settingsEntrenamiento_test import PATH_PARAMETROS
+from redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
 
 
 @pytest.fixture(scope="module")

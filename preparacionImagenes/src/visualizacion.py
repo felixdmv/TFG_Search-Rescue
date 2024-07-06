@@ -9,13 +9,34 @@ import matplotlib.pyplot as plt
 
 
 def dibujaImagen(imagen):
+    """
+    Muestra una imagen utilizando matplotlib.
+
+    Args:
+        imagen: La imagen a mostrar.
+
+    Returns:
+        None
+    """
     imArray = np.array(imagen)
     # Muestra la imagen usando matplotlib
     plt.imshow(imArray)
     plt.axis('on')  # Oculta los ejes
     plt.show()
 
+
 def main():
+    """
+    Main function for image visualization.
+
+    This function loads the configuration parameters, selects an image file,
+    searches for a corresponding XML file, extracts bounding box coordinates,
+    loads the image, creates a list of subimage rectangles, draws rectangles on
+    the image, and displays the final image.
+
+    Returns:
+        None
+    """
     configuracion = cargaParametrosConfiguracionYAML(settings.PATH_PARAMETROS)
     if configuracion == None:
         print(f"Error cargando el fichero de configuración {settings.PATH_PARAMETROS}")
@@ -41,6 +62,7 @@ def main():
     imagenGrid = dibujaRectangulos(imagen, listaRectangulos, color='black', ancho=2)
     imagenConRectangulos = dibujaRectangulos(imagenGrid, rectangulosHumanos)
     dibujaImagen(imagenConRectangulos)
+
 
 if __name__ == '__main__':
     main()

@@ -4,7 +4,7 @@ import tempfile
 from PIL import Image
 import pandas as pd
 import pytest
-from src.preparacion import (
+from preparacion import (
     copiarImagenes, copiarImagenesDf, crearDirstrucTrain, crearDirstrucVal, crearDirstruc
 )
 

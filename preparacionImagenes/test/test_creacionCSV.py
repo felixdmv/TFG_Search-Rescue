@@ -2,10 +2,23 @@ from utils.procesadoXML import getListaBndbox
 import csv
 import os
 from pathlib import Path
-from src.creacionCSV import createCsv
+from creacionCSV import createCsv
 
 
 def readCSVToEstructuras(csv_filepath):
+    """
+    Reads a CSV file and extracts the contents of each column into separate data structures.
+
+    Args:
+        csv_filepath (str): The path to the CSV file.
+
+    Returns:
+        tuple: A tuple containing the following data structures:
+            - dataset_set (set): A set containing unique values from the first column of the CSV.
+            - filename_list (list): A list containing the values from the second column of the CSV.
+            - human_list (list): A list containing the integer values from the third column of the CSV.
+            - box_list (list): A list containing the integer values from the fourth column of the CSV.
+    """
     # Conjuntos y listas para almacenar los contenidos de las columnas
     dataset_set = set()
     filename_list = []
@@ -29,10 +42,39 @@ def readCSVToEstructuras(csv_filepath):
 
 
 def obtieneNombresImagenes(directorio, extension='jpg'):
+    """
+    Obtains the names of images in a given directory with a specified extension.
+
+    Args:
+        directorio (str): The directory path where the images are located.
+        extension (str, optional): The file extension of the images. Defaults to 'jpg'.
+
+    Returns:
+        list: A sorted list of image names with the specified extension in the directory.
+    """
     return sorted([f for f in os.listdir(directorio) if f.endswith(f'.{extension}')])
     
-# Test para la función createCsv
+    
 def test_creacionCSV():
+    """
+    Test function for the createCsv function.
+    
+    This function tests the functionality of the createCsv function by performing the following steps:
+    1. Sets up the necessary variables and paths.
+    2. Creates the directory for the test images if it doesn't exist.
+    3. Removes the CSV file if it already exists.
+    4. Calls the createCsv function.
+    5. Verifies if the CSV file was created in the expected path.
+    6. Verifies if the CSV file has the expected headers.
+    7. Reads the CSV file and extracts the dataset, image names, human values, and box values.
+    8. Verifies if there is only one dataset in the CSV file.
+    9. Verifies if the dataset name in the CSV file matches the expected dataset name.
+    10. Obtains the image names in the directory.
+    11. Verifies if the image names in the CSV file match the image names in the directory.
+    12. Verifies the distribution of 0's and 1's in the boxes.
+    13. Verifies the "Hay humano" value for each image.
+    14. Optionally, cleans up the CSV file after the test.
+    """
     # Número arbitrario de cajas para el test
     numCajas = 5
     # Nombre del directorio donde se encuentran las imágenes
@@ -40,14 +82,12 @@ def test_creacionCSV():
     # Nombre del archivo CSV que esperamos que se genere
     nomFich = '_PRUEBA_CREAR_CSV.csv'
 
-    
     # Obtener el directorio padre del archivo de prueba (donde se encuentra el directorio 'test')
     test_dir = Path(__file__).resolve().parents[0]
     # Construir la ruta completa al directorio 'PRUEBA_CREAR_CSV'
     subimageTypePath = test_dir.joinpath('test_files/' +nomFolder)
     # Ruta donde debería crearse el archivo _PRUEBA_CREAR_CSV.csv
     csvFilepath_expected = subimageTypePath.joinpath(nomFich)
-    
     
     # Asegurarse de que el directorio PRUEBA_CREAR_CSV existe
     subimageTypePath.mkdir(parents=True, exist_ok=True)
@@ -66,10 +106,8 @@ def test_creacionCSV():
     with open(csvFilepath_expected, 'r') as file:
         headers = file.readline().strip().split(',')
         assert headers == ["Dataset", "Nombre del archivo", "Hay humano", "Caja Hay humano"], "El archivo CSV no tiene los encabezados esperados"
-    
 
     dataset_set, image_names_csv, human_list, box_list = readCSVToEstructuras(csvFilepath_expected)
-    
     
     assert len(dataset_set) == 1, "El archivo CSV tiene más de un conjunto de datasets o no tiene filas creadas"
     
@@ -78,7 +116,6 @@ def test_creacionCSV():
     
     # Obtener los nombres de las imágenes en el directorio
     image_names_dir = obtieneNombresImagenes(subimageTypePath)
-
 
     # Verificar que los nombres de las imágenes en el CSV coinciden con los del directorio
     assert sorted(image_names_csv) == image_names_dir, "Los nombres de las imágenes en el CSV no coinciden con los nombres en el directorio"
@@ -99,14 +136,12 @@ def test_creacionCSV():
     for i in range(len(listaNumCeros)-1):
         assert abs(listaNumCeros[i] - listaNumCeros[i+1]) <= 1, f"La distribución de 0's en las cajas no es equitativa: supera la unidad"
 
-
     # Verificar el valor de "Hay humano" para cada imagen
     for image_name, human_value in zip(image_names_csv, human_list):
         # Obtener la ruta del archivo XML
         xml_path = os.path.join(subimageTypePath, image_name.replace('.jpg', '.xml'))
         
         # Verificar si la imagen tiene humanos
-       
         listaBndbox = getListaBndbox(xml_path)
         tiene_humanos = 1 if listaBndbox else 0
         
@@ -117,4 +152,4 @@ def test_creacionCSV():
             assert human_value == 0, f"La imagen {image_name} no tiene humanos, pero el valor 'Hay humano' es {human_value}"
 
     # Opcional: Limpiar el archivo después del test
-    os.remove(csvFilepath_expected)    
+    os.remove(csvFilepath_expected)

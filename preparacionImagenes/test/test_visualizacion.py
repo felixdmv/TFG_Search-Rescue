@@ -1,1 +1,0 @@
-# No se ha podido probar la visualización de una imagen con matplotlib.
