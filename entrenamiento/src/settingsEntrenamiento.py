@@ -14,5 +14,4 @@ if ROOT_SRC not in sys.path:
     sys.path.append(str(ROOT_SRC))
 
 PATH_PARAMETROS = ROOT_SRC.joinpath('parametros.yaml')
-
 PATH_MAIN = Path(__file__).parents[1].joinpath('src/main.py')

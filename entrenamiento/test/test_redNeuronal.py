@@ -1,14 +1,10 @@
 import os
 import pytest
 import shutil
-import tempfile
-import numpy as np
 from datetime import datetime
 from tensorflow import keras
-from tensorflow.keras.layers import Conv2D, Flatten, Dense
 import yaml
 from settings_test import PATH_PARAMETROS
-from src.redNeuronal import PrintLearningRate, MultiEarlyStopping
 from src.redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
 
 
@@ -22,10 +18,10 @@ def paths_and_config():
     analisis = parametros.get('analisis', {})
     redNeuronal = parametros.get('redNeuronal', {})
     
-    # Generar dateTime actual
+    # Genera dateTime actual
     dateTime = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Definir parámetros de redNeuronal
+    # Define parámetros de redNeuronal
     paramsRed = {
         'metrica': redNeuronal.get('metrica', 'accuracy'),
         'learningRate': redNeuronal.get('learningRate', 0.001),

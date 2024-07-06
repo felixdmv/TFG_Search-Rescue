@@ -8,7 +8,7 @@ analisis:
   thresholds: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]                # criterio para identificar el umbral donde binarizar las probabilidades orientados a mejorar una metrica: 'f1score' | 'au-roc' | 'prec'
   
   cviter: 3                             # iteracion de una validacion cruzada, por ejemplo si es un 5-k-fold, un numero del 1 al 5
-  idGpu: 0                             # id de la GPU en la que ejecutar el script, en caso de haber mas de una (empieza en la 0, 1, ...) ; para ejecutar en CPU, fijar a -1
+  idGpu: 1                             # id de la GPU en la que ejecutar el script, en caso de haber mas de una (empieza en la 0, 1, ...) ; para ejecutar en CPU, fijar a -1
   numberofboxes: 5 # Para el entrenamiento_cruzado
 
 paths:

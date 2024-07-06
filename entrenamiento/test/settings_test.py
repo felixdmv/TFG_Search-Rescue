@@ -3,10 +3,8 @@ import sys
 
 # Obtiene la ruta absoluta del fichero actual
 FILE = Path(__file__).resolve()
-
 # Obtiene el directorio dos niveles por encima del directorio actual
 ROOT_TRAINING = FILE.parents[1]
-
 ROOT_SRC = ROOT_TRAINING.joinpath('src')
 
 if ROOT_TRAINING not in sys.path:

@@ -4,9 +4,8 @@ from datetime import datetime
 import pytest
 import shutil
 import pandas as pd
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 from keras import layers, models
-from PIL import ImageFile
 from src.entrenamiento import calcularPesosPorClase, entrenamientoSimple, obtenerMejorDelHistorico, promediarModelos, pasada_uno, pasadaIesima
 from settings_test import PATH_PARAMETROS
 import yaml

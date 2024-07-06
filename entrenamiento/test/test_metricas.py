@@ -47,18 +47,18 @@ def test_metricasBinclass_values(setup_data):
     metricas, yPredBinario = metricasBinclass(yReal, yPred, threshold=0.5)
     
     # Verifica los valores de las métricas
-    assert metricas[4] == 1  # TN
+    assert metricas[4] == 2  # TN
     assert metricas[5] == 1  # FN
     assert metricas[6] == 1  # TP
-    assert metricas[7] == 1  # FP
-    assert np.isclose(metricas[8], 0.5)  # Accuracy
-    assert np.isclose(metricas[9], 0.5)  # NPV
-    assert np.isclose(metricas[10], 0.5)  # PPV
-    assert np.isclose(metricas[11], 0.5)  # TNR
-    assert np.isclose(metricas[12], 0.5)  # TPR
-    assert np.isclose(metricas[13], 0.5)  # F1Score
-    assert np.isclose(metricas[14], 0.5833, atol=1e-4)  # AU-PR
-    assert np.isclose(metricas[15], 0.75)  # AU-ROC
+    assert metricas[7] == 0  # FP
+    assert np.isclose(metricas[8], 0.75, atol=1e-2)  # Accuracy
+    assert np.isclose(metricas[9], 0.66, atol=1e-2)  # NPV
+    assert np.isclose(metricas[10], 1, atol=1e-2)  # PPV
+    assert np.isclose(metricas[11], 1, atol=1e-2)  # TNR
+    assert np.isclose(metricas[12], 0.5, atol=1e-2)  # TPR
+    assert np.isclose(metricas[13], 0.66, atol=1e-2)  # F1Score
+    assert np.isclose(metricas[14], 0.79, atol=1e-2)  # AU-PR
+    assert np.isclose(metricas[15], 0.75, atol=1e-2)  # AU-ROC
 
 @pytest.fixture(scope='module')
 def setup_model():

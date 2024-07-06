@@ -9,6 +9,7 @@ from preparacion import dataStructureForAnalysisDroneSAR, configurarTrainValGene
 from redNeuronal import inicializarRed
 from entrenamiento import entrenamientoSimple
 from metricas import calcularRendimientoTest
+from settingsEntrenamiento import PATH_PARAMETROS
 
 def loadConfiguration(configFile):
     with open(configFile, 'r') as file:
@@ -22,7 +23,6 @@ def setupGPU(analisis):
         tf.config.experimental.set_memory_growth(gpus[analisis['idGpu']], True)
         print(f"ELEGIDA LA GPU Nº {analisis['idGpu']}")
 
-
 def saveResults(modelo, directorios, analisis, paramsRed, thresholds, resDir, tiempo):
     fichero = os.path.join(resDir, f"AlexNet.{analisis['cviter']}.modelo.h5")
     modelo.save(fichero)
@@ -35,11 +35,14 @@ def saveResults(modelo, directorios, analisis, paramsRed, thresholds, resDir, ti
     print(resultadosTest)
     resultadosTest.to_csv(os.path.join(resDir, f"AlexNet.{analisis['cviter']}.resultados.csv"), index=False)
 
-
 def cleanup(paths, dateTime, analisis):
-    shutil.rmtree(os.path.join(os.path.abspath(paths['datosEntreno']), dateTime))
-    shutil.rmtree(os.path.join(os.path.abspath(paths['temporal']), analisis['objetivo'], dateTime))
-
+    try:
+        shutil.rmtree(os.path.join(os.path.abspath(paths['datosEntreno']), dateTime))
+        shutil.rmtree(os.path.join(os.path.abspath(paths['temporal']), analisis['objetivo'], dateTime))
+        return True
+    except Exception as e:
+        print(f"Error during cleanup: {e}")
+        return False
 
 def main():
     now = datetime.now()
@@ -49,7 +52,8 @@ def main():
     nombreScript = 'main.py'
     
     # Load configuration
-    configFile = './parametros.yaml'
+    configFile = PATH_PARAMETROS
+    print(f"Using configuration file: {configFile}")  # Línea añadida para imprimir la ruta de PATH_PARAMETROS
     configuracion = loadConfiguration(configFile)
     
     configuracion['analisis']['script'] = nombreScript
@@ -86,8 +90,18 @@ def main():
     with open(fichero, 'w') as file:
         yaml.dump(configuracion, file)
 
-    # Cleanup temporary directories
-    cleanup(paths, dateTime, analisis)
+    # Cleanup temporary directories and check if successful
+    cleanup_success = cleanup(paths, dateTime, analisis)
+    if cleanup_success:
+        print("Temporary directories cleaned up successfully.")
+    else:
+        print("Failed to clean up temporary directories.")
+
+    # Check if results directory exists
+    if os.path.exists(resDir):
+        print(f"Results directory {resDir} created successfully.")
+    else:
+        print(f"Failed to create results directory {resDir}.")
 
 if __name__ == "__main__":
     main()
