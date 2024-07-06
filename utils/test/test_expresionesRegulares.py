@@ -1,7 +1,21 @@
 import pytest
 from utils.expresionesRegulares import getPatronFile
 
+
 def test_getPatronFile():
+    """
+    Test function for the getPatronFile function.
+
+    This function tests the behavior of the getPatronFile function by asserting the expected output for different test cases.
+
+    Test Cases:
+    - Caso 1: Coincidencia simple
+    - Caso 2: Coincidencia múltiple
+    - Caso 3: Sin coincidencia
+    - Caso 4: Coincidencia con caracteres especiales
+    - Caso 5: Patrón en el medio
+    - Caso 6: Patrón con delimitadores
+    """
     # Caso 1: Coincidencia simple
     base_name = "file123_test"
     regex = r"file(\d+)_test"

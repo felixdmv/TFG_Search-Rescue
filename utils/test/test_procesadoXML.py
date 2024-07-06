@@ -2,8 +2,15 @@ import os
 import pytest
 from utils.procesadoXML import getListaBndbox, createXmlSubimage
 
+
 @pytest.fixture
 def setup_test_files():
+    """
+    Creates test XML files with corrected content for testing purposes.
+
+    Returns:
+        str: The directory path where the test files are created.
+    """
     # Directory for test files
     test_files_dir = os.path.join(os.path.dirname(__file__), 'test_files')
     
@@ -59,17 +66,37 @@ def setup_test_files():
 
     return test_files_dir
 
+
 def test_getListaBndbox(setup_test_files):
-    test_xml_1 = os.path.join(setup_test_files, "test1.xml")
-    test_xml_2 = os.path.join(setup_test_files, "test2.xml")
+   """
+   Test case for the getListaBndbox function.
 
-    lista_bndbox_1 = getListaBndbox(test_xml_1)
-    assert lista_bndbox_1 == [(100, 150, 200, 250)]
+   Args:
+      setup_test_files (str): The path to the test files directory.
 
-    lista_bndbox_2 = getListaBndbox(test_xml_2)
-    assert lista_bndbox_2 == [(300, 350, 400, 450), (500, 550, 600, 650)]
+   Returns:
+      None
+   """
+   test_xml_1 = os.path.join(setup_test_files, "test1.xml")
+   test_xml_2 = os.path.join(setup_test_files, "test2.xml")
+
+   lista_bndbox_1 = getListaBndbox(test_xml_1)
+   assert lista_bndbox_1 == [(100, 150, 200, 250)]
+
+   lista_bndbox_2 = getListaBndbox(test_xml_2)
+   assert lista_bndbox_2 == [(300, 350, 400, 450), (500, 550, 600, 650)]
+
 
 def test_createXmlSubimage(setup_test_files):
+   """
+   Test case for the createXmlSubimage function.
+   
+   Args:
+      setup_test_files (str): The path to the test files directory.
+      
+   Returns:
+      None
+   """
    test_xml_1 = os.path.join(setup_test_files, "test1.xml")
    lista_bndbox_1 = getListaBndbox(test_xml_1)
 
