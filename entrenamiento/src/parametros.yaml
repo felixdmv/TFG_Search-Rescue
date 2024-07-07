@@ -3,11 +3,11 @@ analisis:
   clases: ['no','si']                   # si problema=clasificacion, lista de clases ; si ademas tipo=binaria, la primera clase son controles y la segunda casos ; si no, dejar como lista vacia
   ficheroCsv: '../imagenes/_Todos.csv'   # fichero con una linea por muestra, distintos objetivos a analizar, y el particionado en cajas de las muestras para una validacion cruzada
   estrategiaEntreno: 'todo'            # todo=un entrenamiento simple con toda la caja train | iterativo=entrenamiento iterativo con subconjuntos balanceados de la caja de train 
-  dataAugmentation: 0                  # 1=aplicar data augmentation al vuelo sobre el conjunto de training ; 0=sin data augmentation
+  dataAugmentation: 1                  # 1=aplicar data augmentation al vuelo sobre el conjunto de training ; 0=sin data augmentation
 
   thresholds: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]                # criterio para identificar el umbral donde binarizar las probabilidades orientados a mejorar una metrica: 'f1score' | 'au-roc' | 'prec'
   
-  cviter: 3                             # iteracion de una validacion cruzada, por ejemplo si es un 5-k-fold, un numero del 1 al 5
+  cviter: 1                             # iteracion de una validacion cruzada, por ejemplo si es un 5-k-fold, un numero del 1 al 5
   idGpu: 1                             # id de la GPU en la que ejecutar el script, en caso de haber mas de una (empieza en la 0, 1, ...) ; para ejecutar en CPU, fijar a -1
   numberofboxes: 5 # Para el entrenamiento_cruzado
 
@@ -26,7 +26,7 @@ redNeuronal:
   activacionPorCapa:                  # incluir tantas lineas como numero de capas_densas, relu | ...
     - "relu"
   dropoutPorCapa:                     # incluir tantas lineas como numero de capas_densas, si no se quiere aplicar dropout a la capa i-esima, poner 0
-    - 0
+    - 0.4
 
   #model.compile
   learningRate: 0.001                  # tasa de aprendizaje ; valores altos (0.01 o 0.1) entrenara mas rapido pero será intestable ; valores pequeños (0.0001 o menos) será mas estable, pero tardará en aprender o incluso no logre hacerlo
@@ -34,8 +34,8 @@ redNeuronal:
   decayRate: 0.95                      # la nueva learning rate será la actual multiplicado por este parámetro
   metrica: 'auroc'                      # metrica a monitorizar para ver que el modelo va aprendiendo y no sobreentrena, aupr | auroc | precision | recall | rec@prec
   #early stopping
-  patience: 5
-  startFromEpoch: 8
+  patience: 3
+  startFromEpoch: 5
   #image data generators
   color: 'rgb'
   trainBatchSize: 32
