@@ -254,8 +254,6 @@ def cargandoModelo():
     """
     with st.spinner(f'Cargando modelo {st.session_state.nombreModelo}...'):
         urlModelo = st.session_state.enlacesModelos[st.session_state.nombreModelo]
-        # paso str(st.session_state.nombreModelo) porque parece que no es cacheable un
-        # argumento que es una variable st.session_state
         st.session_state['modelo'] = cargaModeloH5(str(st.session_state.nombreModelo), urlModelo)
     
     
@@ -408,7 +406,6 @@ def main():
     """
     Main function that controls the flow of the application based on the current state of the finite state machine (FSM).
     """
-    # Se hace str() al PATH porque st.logo() espera un string no un objeto Path
     st.logo(str(settings.PATH_LOGO), link=settings.URL_LOGO)
     st.subheader("Detección de Personas en Operaciones de Búsqueda y Rescate con UAS")
 
