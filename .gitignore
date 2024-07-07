@@ -188,7 +188,7 @@ fabric.properties
 venv
 venv/
 
-# streamlit
+# Streamlit
 **/secrets.toml
 **/google_credentials.json
 config.yaml
