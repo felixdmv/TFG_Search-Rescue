@@ -70,7 +70,7 @@ La WebApp se divide en:
 La carpeta **utils** contiene scripts `.py` de utilidad para los subproyectos de preparación y WebApp.
 
 
-### Entorno de Desarrollo
+## Entorno de Desarrollo
 
 Se recomienda tener instaladas las siguientes herramientas para reproducir completamente el proyecto:
 
