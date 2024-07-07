@@ -112,7 +112,7 @@ def cargaEnlacesModelos():
         enlacesModelos[enlace[0]] = enlace[1]
     return enlacesModelos
 
-@st.cache_data(ttl=3600, show_spinner=False)  # Para que no muestre el spinner por defecto
+@st.cache_resource(ttl=3600, show_spinner=False)  # Cache resource en vez de data
 def cargaModeloH5(nombreModelo, urlModelo):
     """
     Carga un modelo a partir de un nombre h5 y su url y devuelve el modelo cargado.
