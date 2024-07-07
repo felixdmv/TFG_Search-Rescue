@@ -9,6 +9,17 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 def copiarImagenes(pathImagenes, dfImagenes, pathDestino):
+    """
+    Copy images from the source directory to the destination directory.
+
+    Args:
+        pathImagenes (str): The path to the source directory containing the images.
+        dfImagenes (DataFrame): The DataFrame containing information about the images.
+        pathDestino (str): The path to the destination directory where the images will be copied.
+
+    Returns:
+        None
+    """
     for indice, fila in dfImagenes.iterrows():
         dataset = fila['Dataset']
         rutaImagen = os.path.join(pathImagenes, dataset, dataset, fila['Nombre del archivo'])
@@ -16,26 +27,54 @@ def copiarImagenes(pathImagenes, dfImagenes, pathDestino):
 
 
 def copiarImagenesDf(pathImagenes, analisis, dir, dframe):
+    """
+    Copy images from a DataFrame to a specified directory based on class labels.
+
+    Args:
+        pathImagenes (str): The path to the directory containing the images.
+        analisis (dict): A dictionary containing analysis information, including the 'objetivo' and 'clases'.
+        dir (str): The directory where the images will be copied to.
+        dframe (pd.DataFrame): The DataFrame containing the images.
+
+    Returns:
+        pd.DataFrame: The updated DataFrame with 'sin usar' column modified.
+        list: A list containing the number of images added for each class.
+        int: The total number of images in the DataFrame.
+    """
     problema = analisis['objetivo']
     clases = analisis['clases']
     
-    imagenesHubu = dframe
+    imagenes = dframe
     añadidas = [0] * len(clases)
     for labelId, clase in enumerate(clases):
         dirClase = os.path.join(dir, clase)
         if not(os.path.exists(dirClase)):
             os.makedirs(dirClase)
-        imagenesDeLaClase = imagenesHubu[imagenesHubu[problema] == labelId]
+        imagenesDeLaClase = imagenes[imagenes[problema] == labelId]
         copiarImagenes(pathImagenes, imagenesDeLaClase, dirClase)
         añadidas[labelId] += imagenesDeLaClase.shape[0]
 
-    posicionesFilasHubu = imagenesHubu.index.tolist()
-    dframe.loc[posicionesFilasHubu, 'sin usar'] = pd.NA
+    posicionesFilas = imagenes.index.tolist()
+    dframe.loc[posicionesFilas, 'sin usar'] = pd.NA
 
-    return dframe, añadidas, imagenesHubu.shape[0]
+    return dframe, añadidas, imagenes.shape[0]
 
 
 def copiarImagenesResto(pathImagenes, analisis, dir, dframe, numLocalImages, conteoLocalPorClase):
+    """
+    Copies images from the remaining dataset to balance the classes and complete the desired number of images per class.
+
+    Args:
+        pathImagenes (str): The path to the directory where the images will be copied.
+        analisis (dict): A dictionary containing the analysis information, including the target variable and class labels.
+        dir (str): The directory where the class directories will be created.
+        dframe (pandas.DataFrame): The dataframe containing the image data.
+        numLocalImages (int): The number of images per class in the local dataset.
+        conteoLocalPorClase (list): A list containing the count of images per class in the local dataset.
+
+    Returns:
+        pandas.DataFrame: The updated dataframe with the 'sin usar' column indicating whether an image has been used or not.
+    """
     problema = analisis['objetivo']
     clases = analisis['clases']
 
@@ -101,6 +140,18 @@ def copiarImagenesResto(pathImagenes, analisis, dir, dframe, numLocalImages, con
 
 
 def crearDirstrucTrain(pathImagenes, analisis, trainDir, trainDframe):
+    """
+    Creates the directory structure for training data and copies images based on the specified analysis.
+
+    Args:
+        pathImagenes (str): The path to the images directory.
+        analisis (dict): A dictionary containing the analysis parameters.
+        trainDir (str): The path to the training directory.
+        trainDframe (pandas.DataFrame): The training dataframe.
+
+    Returns:
+        pandas.DataFrame: The updated training dataframe.
+    """
     estrategiaEntreno = analisis['estrategiaEntreno']
     problema = analisis['objetivo']
     clases = analisis['clases']
@@ -130,6 +181,18 @@ def crearDirstrucTrain(pathImagenes, analisis, trainDir, trainDframe):
 
 
 def crearDirstrucVal(pathImagenes, analisis, valDir, valDframe):
+    """
+    Create directory structure for validation data and copy images based on the given analysis.
+
+    Args:
+        pathImagenes (str): The path to the images.
+        analisis (dict): The analysis containing the training strategy, objective, and classes.
+        valDir (str): The path to the validation directory.
+        valDframe (pandas.DataFrame): The DataFrame containing the validation data.
+
+    Returns:
+        pandas.DataFrame: The updated validation DataFrame.
+    """
     estrategiaEntreno = analisis['estrategiaEntreno']
     problema = analisis['objetivo']
     clases = analisis['clases']
@@ -168,6 +231,19 @@ def crearDirstrucVal(pathImagenes, analisis, valDir, valDframe):
 
 
 def crearDirstruc(pathImagenes, analisis, dir, dframe):
+    """
+    Create directory structure based on the analysis and DataFrame provided.
+
+    Args:
+        pathImagenes (str): The path to the images.
+        analisis (dict): A dictionary containing the analysis information.
+        dir (str): The directory path where the directory structure will be created.
+        dframe (pandas.DataFrame): The DataFrame containing the image data.
+
+    Returns:
+        pandas.DataFrame: The updated DataFrame.
+
+    """
     problema = analisis['objetivo']
     clases = analisis['clases']
     
@@ -184,22 +260,35 @@ def crearDirstruc(pathImagenes, analisis, dir, dframe):
     return dframe
 
 
-def dataStructureForAnalysisDroneSAR(path, analisis, dateTime, iteracion = None):
+def dataStructureForAnalysisDroneSAR(path, analisis, dateTime, iteracion=None):
+    """
+    Create a data structure for analysis of Drone SAR data.
+
+    Args:
+        path (str): The path to the directory.
+        analisis (dict): A dictionary containing analysis information.
+        dateTime (str): The date and time.
+        iteracion (int, optional): The iteration number. Defaults to None.
+
+    Returns:
+        tuple: A tuple containing the directories and dataframes.
+
+    """
     csvFile = analisis['ficheroCsv']
     problema = analisis['objetivo']
-    if(iteracion == None):
+    if iteracion is None:
         iteracion = analisis['cviter']
     
-    directorioIteracion = os.path.join(path, dateTime, f'subimagenes')
+    directorioIteracion = os.path.join(path, dateTime, 'subimagenes')
     if os.path.exists(directorioIteracion):
          shutil.rmtree(directorioIteracion)
     os.makedirs(directorioIteracion)
     
-    idboxTesting    = iteracion
+    idboxTesting = iteracion
     idboxValidation = iteracion + 1
-    if (idboxValidation > 5):
+    if idboxValidation > 5:
         idboxValidation = idboxValidation % 5
-    idboxTraining   = list(set(range(1,6)) - set([idboxTesting, idboxValidation]))
+    idboxTraining = list(set(range(1, 6)) - set([idboxTesting, idboxValidation]))
 
     # Carga el archivo CSV en un DataFrame de Pandas
     dataframe = pd.read_csv(csvFile)
@@ -260,7 +349,20 @@ def dataStructureForAnalysisDroneSAR(path, analisis, dateTime, iteracion = None)
     
     return directorios, dframes
 
+
 def configurarTrainValGenerators(analisis, paramsRed, trainDir, valDir):
+    """
+    Configures and returns the train and validation data generators.
+
+    Args:
+        analisis (dict): A dictionary containing analysis parameters.
+        paramsRed (dict): A dictionary containing network parameters.
+        trainDir (str): The directory path for the training data.
+        valDir (str): The directory path for the validation data.
+
+    Returns:
+        tuple: A tuple containing the train and validation data generators.
+    """
 
     modo = "binary"
 

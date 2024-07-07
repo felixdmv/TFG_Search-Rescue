@@ -4,11 +4,20 @@ import os
 from PIL import ImageFile
 import pandas as pd
 from keras import layers
-
 from preparacion import configurarTrainValGenerators
 from redNeuronal import inicializarRed
 
+
 def calcularPesosPorClase(trainGenerator):
+    """
+    Calculates the class weights based on the number of images in each class.
+
+    Args:
+        trainGenerator: The training data generator.
+
+    Returns:
+        A dictionary containing the class weights, where the keys are the class indices and the values are the weights.
+    """
     pathTraining = trainGenerator.directory
     clases = list(trainGenerator.class_indices.keys())
 
@@ -44,11 +53,22 @@ def calcularPesosPorClase(trainGenerator):
         print(f"Clase: {clase}, Peso: {peso}")
 
     return classWeights
- 
-# %%
 
-# %%
+
 def entrenamientoSimple(modelo, callbacks, trainGenerator, valGenerator, paramsRed):
+    """
+    Function to perform simple training of a model.
+
+    Args:
+        modelo (object): The model to be trained.
+        callbacks (list): List of callback functions to be used during training.
+        trainGenerator (object): The generator for training data.
+        valGenerator (object): The generator for validation data.
+        paramsRed (dict): Dictionary containing parameters for the model.
+
+    Returns:
+        tuple: A tuple containing the trained model, training history, and training duration in minutes.
+    """
     ImageFile.LOAD_TRUNCATED_IMAGES = True
 
     classWeights = calcularPesosPorClase(trainGenerator)
@@ -78,13 +98,38 @@ def entrenamientoSimple(modelo, callbacks, trainGenerator, valGenerator, paramsR
 
 
 def obtenerMejorDelHistorico(historico, rowId):
+    """
+    Returns the best record from the historical data based on the given row ID.
+
+    Parameters:
+    historico (pandas.DataFrame): The historical data.
+    rowId (int): The ID of the row to retrieve.
+
+    Returns:
+    pandas.DataFrame: The best record from the historical data.
+    """
     mejor = historico.iloc[[rowId-1]]
     
     return mejor
 
 
-# In[ ]:
 def pasada_uno(paths, dateTime, analisis, paramsRed, modelo, callbacks, trainGenerator, valGenerator):
+    """
+    Perform the first pass of training.
+
+    Args:
+        paths (dict): A dictionary containing file paths.
+        dateTime (str): The current date and time.
+        analisis (dict): A dictionary containing analysis parameters.
+        paramsRed (dict): A dictionary containing network parameters.
+        modelo (object): The model object.
+        callbacks (list): A list of callback objects.
+        trainGenerator (object): The training data generator object.
+        valGenerator (object): The validation data generator object.
+
+    Returns:
+        tuple: A tuple containing the trained model, training history, and best performance.
+    """
     tmpDir = os.path.join(os.path.abspath(paths['temporal']), analisis['objetivo'], dateTime)
 
     print(f"PASADA 1 - CVITER {analisis['cviter']}")
@@ -107,8 +152,17 @@ def pasada_uno(paths, dateTime, analisis, paramsRed, modelo, callbacks, trainGen
     return modelo, historico, bestPerformance
 
 
-# In[ ]:
 def promediarModelos(modelo, nuevomodelo):
+    """
+    Promedia los pesos de las capas Dense de dos modelos y establece los pesos promediados en uno de los modelos.
+
+    Args:
+        modelo (tf.keras.Model): El primer modelo.
+        nuevomodelo (tf.keras.Model): El segundo modelo.
+
+    Returns:
+        tf.keras.Model: El modelo con los pesos promediados establecidos.
+    """
     capasModelo1 = modelo.layers
     capasDenseModelo1 = [capa for capa in capasModelo1 if isinstance(capa, layers.Dense)]
     capasModelo2 = nuevomodelo.layers
@@ -127,7 +181,6 @@ def promediarModelos(modelo, nuevomodelo):
         # Agregar los pesos promediados a la lista
         pesosPromediados.append(pesosPromediadosCapa)
             
-
     # Establecer los pesos promediados en uno de los modelos
     for capa, pesosPromediadosCapa in zip(capasDenseModelo1, pesosPromediados):
         capa.set_weights(pesosPromediadosCapa)
@@ -135,8 +188,27 @@ def promediarModelos(modelo, nuevomodelo):
     return modelo
 
 
-# In[ ]:
 def pasadaIesima(numPasada, historico, bestPerformance, paths, dateTime, analisis, paramsRed, modelo, dirsEntrenamiento, totalSinUsar):
+    """
+    Perform the i-th pass of training.
+
+    Args:
+        numPasada (int): The number of the current pass.
+        historico (pd.DataFrame): The historical performance data.
+        bestPerformance (pd.DataFrame): The best performance achieved so far.
+        paths (dict): The paths to various directories.
+        dateTime (str): The current date and time.
+        analisis (dict): The analysis configuration.
+        paramsRed (dict): The neural network parameters.
+        modelo (tf.keras.Model): The current model.
+        dirsEntrenamiento (dict): The training directories.
+        totalSinUsar (int): The number of unused data samples.
+
+    Returns:
+        tf.keras.Model: The updated model.
+        pd.DataFrame: The updated historical performance data.
+        pd.DataFrame: The best performance achieved so far.
+    """
     tmpDir = os.path.join(os.path.abspath(paths['temporal']), analisis['objetivo'], dateTime)
 
     print()

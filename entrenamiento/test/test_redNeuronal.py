@@ -6,14 +6,24 @@ from tensorflow import keras
 import yaml
 from settingsEntrenamiento_test import PATH_PARAMETROS
 from redNeuronal import inicializarCallbacks, inicializarAlexnet, inicializarRed
+from mainEntrenamiento import loadConfiguration
 
 
 @pytest.fixture(scope="module")
 def paths_and_config():
-    # Cargar el contenido del archivo YAML
-    with open(PATH_PARAMETROS, 'r') as file:
-        parametros = yaml.safe_load(file)
-    
+    """
+    This function loads the content of a YAML file, extracts the necessary parameters,
+    generates the current date and time, defines the neural network parameters, and sets
+    the temporary and results directories based on the YAML configuration.
+
+    Returns:
+        A generator that yields the following values:
+        - paths: A dictionary containing the paths extracted from the YAML file.
+        - dateTime: A string representing the current date and time.
+        - analisis: A dictionary containing the analysis parameters extracted from the YAML file.
+        - paramsRed: A dictionary containing the neural network parameters extracted from the YAML file.
+    """
+    parametros = loadConfiguration(PATH_PARAMETROS)    
     paths = parametros.get('paths', {})
     analisis = parametros.get('analisis', {})
     redNeuronal = parametros.get('redNeuronal', {})
@@ -49,8 +59,16 @@ def paths_and_config():
         shutil.rmtree(res_dir)
         
 
-
 def test_inicializarCallbacks(paths_and_config):
+    """
+    Test function to verify the behavior of the `inicializarCallbacks` function.
+
+    Args:
+        paths_and_config (tuple): A tuple containing the paths, dateTime, analisis, and paramsRed.
+
+    Returns:
+        None
+    """
     paths, dateTime, analisis, paramsRed = paths_and_config
     
     callbacks = inicializarCallbacks(paths, dateTime, analisis, paramsRed, 'val_auc', 'max')
@@ -64,13 +82,23 @@ def test_inicializarCallbacks(paths_and_config):
     assert isinstance(callbacks, list)
     assert len(callbacks) == 4
 
+
 def test_inicializarAlexnet(paths_and_config):
+    """
+    Test function to check the initialization of AlexNet model.
+
+    Args:
+        paths_and_config (tuple): A tuple containing paths, dateTime, analisis, and paramsRed.
+
+    Returns:
+        None
+    """
     paths, dateTime, analisis, paramsRed = paths_and_config
     
     model, monitor, mode = inicializarAlexnet(paths, dateTime, analisis, paramsRed)
     
     assert isinstance(model, keras.Sequential)
-    assert len(model.layers) == 15
+    assert len(model.layers) == 16 # Hay que tener en cuenta las capas densas incluidas en el archivo YAML
     
     assert monitor == 'val_auroc'
     assert mode == 'max'
@@ -81,8 +109,7 @@ def test_inicializarRed(paths_and_config):
     model, callbacks = inicializarRed(paths, dateTime, analisis, paramsRed)
     
     assert isinstance(model, keras.Sequential)
-    assert len(model.layers) == 15
+    assert len(model.layers) == 16 # Hay que tener en cuetna las capas densas incluidas en el archivo YAML
     
     assert isinstance(callbacks, list)
     assert len(callbacks) == 4
-

@@ -6,7 +6,20 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 from tensorflow import keras
 
+
 def configurarMetrica(metrica):
+    """
+    Configures the metrics based on the given metrica parameter.
+
+    Args:
+        metrica (str): The metrica parameter to configure the metrics for.
+
+    Returns:
+        tuple: A tuple containing the configured metricas, monitor, and mode.
+
+    Raises:
+        ValueError: If an invalid metrica parameter is provided.
+    """
     if metrica == 'aupr':
         metricas = [keras.metrics.PrecisionAtRecall(num_thresholds=1000, recall=0.9, name="prec@rec"),
                     keras.metrics.RecallAtPrecision(num_thresholds=1000, precision=0.9, name="rec@prec"),
@@ -51,7 +64,6 @@ def metricasBinclass(yReal, yPred, threshold=0.5):
         
     Retorno: una lista con las metricas [N, % 0's, % 1's, TN, FN, TP, FP, Accuracy, NPV, PPV, TNR, TPR, F1Score, AU-PR, AU-ROC]
     '''
-    
     porcentajeUnos = np.mean(yReal) * 100
     porcentajeCeros = 100 - porcentajeUnos
 
@@ -81,6 +93,19 @@ def metricasBinclass(yReal, yPred, threshold=0.5):
 
 
 def calcularRendimientoTest(modelo, testDir, analisis, paramsRed, thresholds=[0.5]):
+    """
+    Calculates the performance metrics for a given model on the test dataset.
+
+    Args:
+        modelo (keras.Model): The trained model.
+        testDir (str): The directory path of the test dataset.
+        analisis (dict): A dictionary containing analysis parameters.
+        paramsRed (dict): A dictionary containing network parameters.
+        thresholds (list, optional): A list of threshold values for classification. Defaults to [0.5].
+
+    Returns:
+        pandas.DataFrame: A DataFrame containing the calculated performance metrics.
+    """
     test_datagen = ImageDataGenerator(
         rescale=1.0 / 255
     )
@@ -115,6 +140,3 @@ def calcularRendimientoTest(modelo, testDir, analisis, paramsRed, thresholds=[0.
         dfResults.loc[len(dfResults)] = resultado[0]
     
     return dfResults
-
-
-

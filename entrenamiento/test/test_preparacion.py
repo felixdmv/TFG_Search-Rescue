@@ -4,12 +4,21 @@ import tempfile
 from PIL import Image
 import pandas as pd
 import pytest
-from preparacion import (
-    copiarImagenes, copiarImagenesDf, crearDirstrucTrain, crearDirstrucVal, crearDirstruc
-)
+from preparacion import copiarImagenes, copiarImagenesDf, crearDirstrucTrain, crearDirstrucVal, crearDirstruc
+
 
 @pytest.fixture
 def setup_directories():
+    """
+    Set up the necessary directories for testing.
+
+    This function creates a test directory and subdirectories for two datasets.
+    It also creates sample image files within each dataset directory.
+
+    Returns:
+        str: The path to the test directory.
+
+    """
     test_dir = './test_files'
     if os.path.exists(test_dir):
         shutil.rmtree(test_dir)
@@ -17,7 +26,7 @@ def setup_directories():
     os.makedirs(os.path.join(test_dir, 'images', 'dataset1', 'dataset1'))
     os.makedirs(os.path.join(test_dir, 'images', 'dataset2', 'dataset2'))
     
-    # Crear imágenes de prueba
+    # Create sample images
     for i in range(5):
         open(os.path.join(test_dir, 'images', 'dataset1', 'dataset1', f'image_{i}.jpg'), 'a').close()
         open(os.path.join(test_dir, 'images', 'dataset2', 'dataset2', f'image_{i}.jpg'), 'a').close()
@@ -27,7 +36,17 @@ def setup_directories():
     if os.path.exists(test_dir):
         shutil.rmtree(test_dir)
 
+
 def test_copiarImagenes(setup_directories):
+    """
+    Test function to verify the behavior of the copiarImagenes function.
+
+    Args:
+        setup_directories: The setup directories for the test.
+
+    Returns:
+        None
+    """
     test_dir = setup_directories
     pathImagenes = os.path.join(test_dir, 'images')
     dfImagenes = pd.DataFrame({
@@ -42,7 +61,17 @@ def test_copiarImagenes(setup_directories):
     assert os.path.exists(os.path.join(pathDestino, 'image_0.jpg'))
     assert os.path.exists(os.path.join(pathDestino, 'image_1.jpg'))
 
+
 def test_copiarImagenesDf(setup_directories):
+    """
+    Test function for the copiarImagenesDf function.
+
+    Args:
+        setup_directories: The setup directories for the test.
+
+    Returns:
+        None
+    """
     test_dir = setup_directories
     pathImagenes = os.path.join(test_dir, 'images')
     analisis = {
@@ -65,6 +94,15 @@ def test_copiarImagenesDf(setup_directories):
 
 
 def test_crearDirstrucTrain(setup_directories):
+    """
+    Test function to check the creation of directory structure for training data.
+
+    Args:
+        setup_directories (str): The path to the setup directories.
+
+    Returns:
+        None
+    """
     test_dir = setup_directories
     pathImagenes = os.path.join(test_dir, 'images')
     analisis = {
@@ -86,6 +124,15 @@ def test_crearDirstrucTrain(setup_directories):
 
 
 def test_crearDirstrucVal(setup_directories):
+    """
+    Test function to check if the directory structure for validation data is created correctly.
+
+    Args:
+        setup_directories (str): The path to the setup directories.
+
+    Returns:
+        None
+    """
     test_dir = setup_directories
     pathImagenes = os.path.join(test_dir, 'images')
     analisis = {
@@ -105,7 +152,17 @@ def test_crearDirstrucVal(setup_directories):
     assert os.path.exists(os.path.join(valDir, 'class1', 'image_0.jpg'))
     assert os.path.exists(os.path.join(valDir, 'class2', 'image_1.jpg'))
 
+
 def test_crearDirstruc(setup_directories):
+    """
+    Test function for the crearDirstruc function.
+
+    Args:
+        setup_directories: The setup directories for the test.
+
+    Returns:
+        None
+    """
     test_dir = setup_directories
     pathImagenes = os.path.join(test_dir, 'images')
     analisis = {
@@ -127,6 +184,12 @@ def test_crearDirstruc(setup_directories):
 
 @pytest.fixture
 def setup_images():
+    """
+    Generates and saves 10 images of size 10x10 pixels in a temporary directory.
+    
+    Returns:
+        tuple: A tuple containing the path to the temporary directory and a list of image paths.
+    """
     image_paths = []
     temp_dir = tempfile.mkdtemp()
     img_dir = os.path.join(temp_dir, 'img')
@@ -145,4 +208,3 @@ def setup_images():
     if os.path.exists(temp_dir):
         import shutil
         shutil.rmtree(temp_dir)
-

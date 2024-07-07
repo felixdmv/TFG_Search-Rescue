@@ -6,14 +6,25 @@ from unittest.mock import MagicMock, patch
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from metricas import configurarMetrica, metricasBinclass, calcularRendimientoTest
 
+
 @pytest.fixture(scope='module')
 def setup_data():
-    # Crear datos ficticios para las pruebas
+    """
+    Creates fictitious data for testing purposes.
+
+    Returns:
+        yReal (numpy.ndarray): Array of real values.
+        yPred (numpy.ndarray): Array of predicted values.
+    """
     yReal = np.array([0, 0, 1, 1])
     yPred = np.array([0.1, 0.4, 0.35, 0.8])
     return yReal, yPred
 
+
 def test_configurarMetrica():
+    """
+    Test function for the configurarMetrica function.
+    """
     metricas, monitor, mode = configurarMetrica('aupr')
     assert monitor == "val_aupr"
     assert mode == "max"
@@ -34,7 +45,17 @@ def test_configurarMetrica():
     assert mode == "max"
     assert len(metricas) == 4
 
+
 def test_metricasBinclass(setup_data):
+    """
+    Test function for metricasBinclass.
+
+    Args:
+        setup_data: A tuple containing the real labels (yReal) and predicted labels (yPred).
+
+    Returns:
+        None
+    """
     yReal, yPred = setup_data
     metricas, yPredBinario = metricasBinclass(yReal, yPred, threshold=0.5)
     
@@ -42,7 +63,17 @@ def test_metricasBinclass(setup_data):
     assert isinstance(metricas, list)
     assert isinstance(yPredBinario, np.ndarray)
 
+
 def test_metricasBinclass_values(setup_data):
+    """
+    Test function to verify the values of various metrics for binary classification.
+
+    Parameters:
+    - setup_data: A tuple containing the real values (yReal) and predicted values (yPred).
+
+    Returns:
+    None
+    """
     yReal, yPred = setup_data
     metricas, yPredBinario = metricasBinclass(yReal, yPred, threshold=0.5)
     
@@ -60,14 +91,31 @@ def test_metricasBinclass_values(setup_data):
     assert np.isclose(metricas[14], 0.79, atol=1e-2)  # AU-PR
     assert np.isclose(metricas[15], 0.75, atol=1e-2)  # AU-ROC
 
+
 @pytest.fixture(scope='module')
 def setup_model():
-    # Crear un modelo simple para pruebas
+    """
+    Creates a simple model for testing purposes.
+
+    Returns:
+        model (Sequential): The compiled model with an input shape of (10,) and a single Dense layer with 1 unit.
+    """
     model = models.Sequential([layers.Dense(1, input_shape=(10,))])
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
+
 def test_calcularRendimientoTest(setup_model, tmpdir):
+    """
+    Test function for calculating performance metrics on test data.
+
+    Args:
+        setup_model: The setup model object.
+        tmpdir: The temporary directory for storing test images.
+
+    Returns:
+        None
+    """
     model = setup_model
     test_dir = tmpdir.mkdir('test_images')
 
@@ -98,4 +146,3 @@ def test_calcularRendimientoTest(setup_model, tmpdir):
             assert isinstance(dfResults, pd.DataFrame)
             assert not dfResults.empty
             assert dfResults.shape[1] == 16  # Número de columnas en el DataFrame
-
