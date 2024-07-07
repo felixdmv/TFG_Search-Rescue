@@ -20,21 +20,6 @@ def cargaModelo(ficheroModelo):
     return load_model(ficheroModelo, compile=False)
 
 
-def cargaImagen(ficheroImagen):
-    """
-    Carga una imagen desde un archivo.
-
-    Args:
-        ficheroImagen (str): La ruta del archivo de imagen a cargar.
-
-    Returns:
-        PIL.Image.Image: La imagen cargada.
-
-    """
-    imagen = load_img(ficheroImagen, target_size=None) # target_size= None --> Se deja al tamaño original
-    return imagen
-
-
 def predice(modelo, imagen, listaRectangulos, batch_size=1):
     """
     Predicts the output for a given model, image, and list of rectangles.
