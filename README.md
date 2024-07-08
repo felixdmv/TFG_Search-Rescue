@@ -13,6 +13,7 @@ Cada subproyecto está cuidadosamente estructurado para facilitar su comprensió
 
 ## Tecnologías Utilizadas
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/be5a6ad8f72f48e198fcf60ca82cc0d3)](https://app.codacy.com/gh/felixdmv/TFG_Search-Rescue?utm_source=github.com&utm_medium=referral&utm_content=felixdmv/TFG_Search-Rescue&utm_campaign=Badge_Grade)
 [![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![TensorFlow](https://img.shields.io/badge/tensorflow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![Keras](https://img.shields.io/badge/keras-D00000?style=for-the-badge&logo=keras&logoColor=white)](https://keras.io/)
