@@ -19,6 +19,8 @@ Cada subproyecto está cuidadosamente estructurado para facilitar su comprensió
 [![Streamlit](https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![YAML](https://img.shields.io/badge/yaml-000000?style=for-the-badge&logo=yaml&logoColor=white)](https://yaml.org/)
 [![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/35235fc97867a7af966893934f9022f49f6815d2)](https://www.codacy.com/gh/felixdmv/TFG_Search-Rescue/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=felixdmv/TFG_Search-Rescue&amp;utm_campaign=Badge_Grade)
+
 
 ## Estructura de Directorios
 
